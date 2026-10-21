@@ -88,7 +88,8 @@ def verify_plan(product: str, cash_flow: dict, underwriting: dict, offers: dict,
         pay = rec.get("monthly_payment") or 0
         add("Payment <= 40% of residual income", pay <= cap + 1,
             f"payment ${pay} vs cap ${cap} (residual ${cash_flow['monthly_residual_income']})")
-        add("APR <= 18% policy cap", (rec.get("apr_pct") or 0) <= 18, f"APR {rec.get('apr_pct')}%")
+        apr = rec.get("apr_pct")
+        add("APR <= 18% policy cap", (apr or 0) <= 18, "no interest (not a loan)" if apr is None else f"APR {apr}%")
         add("No deferred-interest product recommended", rec.get("type") != "deferred_interest_card",
             f"type = {rec.get('type')}")
     if rec and rec.get("principal") and rec.get("months") and rec.get("apr_pct") is not None:

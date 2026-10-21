@@ -59,6 +59,11 @@ Daily dollar budget (`CABAKA_DAILY_BUDGET_USD`, default $5), per-run token cap, 
 6 runs per visitor per 10 minutes, prompt caching on every agent. Every call's real token usage is in
 `logs/usage.jsonl` and on the **Usage & cost** tab.
 
+## Evidence for the report
+`docs/evidence/` holds the real run logs (every agent step, tool call and token count), the per-call usage ledger,
+and the model comparison. `scripts/run_all.py` reruns the applicants, `scripts/compare_models.py` reruns the comparison,
+and `scripts/build_docs.py` rebuilds `report.html` / `slides.html` from `docs/*_src.html`.
+
 ## Project layout
 ```
 app.py                  Flask server + JSON API

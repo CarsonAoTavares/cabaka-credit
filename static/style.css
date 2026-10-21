@@ -57,6 +57,7 @@ main { padding: 18px 24px; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 5px var(--green-200); } }
 .arrow { align-self: center; color: var(--muted); }
 .timeline { max-height: 340px; overflow: auto; border-top: 1px solid var(--line); padding-top: 8px; font-size: 13px; }
+.timeline.full { max-height: none; }
 .ev { padding: 5px 0; border-bottom: 1px dashed var(--line); }
 .ev .who { font-weight: 600; color: var(--green-800); margin-right: 6px; }
 .ev .t { color: var(--muted); font-size: 11px; margin-right: 6px; }

@@ -4,38 +4,32 @@
 
 Hand this file to any new Claude Code session to pick up where we left off.
 
+## Links
+- Repo (public): https://github.com/CarsonAoTavares/cabaka-credit
+- Live app: https://cabaka-credit.onrender.com (Render free plan; auto-deploys on push to `main`; `ANTHROPIC_API_KEY` set in Render → Environment)
+
 ## Decisions already made
-- **App:** Cabaka Credit, Care-to-Home Copilot. Multi-agent Claude app: Gatekeeper (Haiku 5.5) → Underwriter → Offer Architect → Compliance (Opus 5.5, low effort) → code Verifier → human loan officer. Two products on the same agents: clinic medical loans and small (<$150k) mortgages.
-- **Model access:** Claude only, via `ANTHROPIC_API_KEY` (no Portkey, no OpenAI). The app will be **hosted online** (Render, `render.yaml`), because the teaching staff only have OpenAI/Portkey keys.
-- **Data:** 5 fictional applicants (`scripts/make_synthetic_data.py`); `jordan_test` is the prompt-injection red-team file.
+- **App:** Cabaka Credit, Care-to-Home Copilot. Gatekeeper (Haiku 5.5) → Underwriter → Offer Architect → Compliance (Opus 5.5, low effort) → code Verifier → human loan officer. Two products on the same agents: clinic medical loans and small (<$150k) mortgages.
+- **Model access:** Claude only, via `ANTHROPIC_API_KEY` (no Portkey, no OpenAI). Hosted online because the staff only have OpenAI/Portkey keys.
+- **Shipped config:** Opus 5.5 at low effort. The comparison showed medium effort adds 31% cost for no gain, and Sonnet/Haiku make judgment errors.
 
 ## Done
-- [x] App code: `app.py`, `cabaka/` (tools, agents, pipeline, safety, llm), web UI in `static/`
-- [x] 17 offline tests pass (`python -m pytest -q`), including the full pipeline with a fake Claude
-- [x] README, `.env.example`, `.gitignore` (real `.env` is never committed), `render.yaml`
-- [x] Fresh-clone dry run: install takes ~30s, tests pass, `.env` one folder up is found
-- [x] Facts checked against sources (Freddie Mac, Pew, CFPB, KFF, HHS 2026 FPL); the 2025 CFPB medical-debt rule was **vacated July 2025**
-- [x] report.html (8 pages now) and slides.html (9 slides) drafts; build with `python scripts/build_docs.py`
-- [x] Screenshots: `docs/img/01_applicant.png` (retake once the key is set), `docs/img/07_tests.png`
-- [x] Local git repo with commits
+- [x] App, 17 offline tests, README, `.env.example`, `render.yaml`, fresh-clone dry run
+- [x] Live deploy working with the key (live run on Render: $0.10, 40 s, all checks passed)
+- [x] Real runs: all 5 applicants pass; the red-team injection was blocked live. Average $0.124/run, ~25k tokens, 46 s
+- [x] Model comparison (Opus low/medium, Sonnet, Haiku × 4 applicants), in `docs/evidence/model_comparison.json`
+- [x] Screenshots `docs/img/01`–`07`; report.html is 13 pages; slides.html has 9 slides
+- [x] Evidence logs in `docs/evidence/` (19 runs, 131 calls, $1.63 total spend)
+- [x] Facts checked against sources (Freddie Mac, Pew, CFPB, KFF, HHS 2026)
 
-## To do (in order)
-1. **User:** create an Anthropic API key (platform.claude.com → Billing $10 → API Keys) and paste it into `.env`.
-2. Real runs: Maria, Dale, Kwame, Tina, Jordan Test (injection) → `logs/runs/*.json`, `logs/usage.jsonl`.
-3. Screenshots from runs: `python scripts/screenshots.py run <run_id> <name>` →
-   `02_timeline`, `03_offers`, `04_letter`, `05_receipt`, `06_injection`; retake `01_applicant`.
-4. Cost-vs-quality test: Opus low vs Opus medium vs Sonnet 5.5 on the 4 normal applicants
-   (cost, time, Verifier pass rate). Set the model with `CABAKA_MAIN_MODEL` / `CABAKA_MAIN_EFFORT`.
-5. Fill every **TBD** in `docs/report_src.html` and `docs/slides_src.html`, rebuild, check 10–15 printed pages.
-6. ~~GitHub repo~~ **Done:** public at https://github.com/CarsonAoTavares/cabaka-credit (push with `git push`).
-7. ~~Deploy~~ **Done:** live at https://cabaka-credit.onrender.com (Render free plan, auto-deploys on every push to `main`).
-   **Still needed:** the user pastes `ANTHROPIC_API_KEY` in Render → cabaka-credit → Environment → Save (it redeploys).
-8. **User:** one real person tries the app (loan officer, clinic front desk, or patient). Get a quote and their time today vs. with the app.
-9. Optional: 2–3 minute demo video.
-10. Submit on Canvas: repo link, report.html, slides.html (+ video).
+## To do
+1. **User:** one real person tries the app using `docs/user_test_kit.md`. Bring back their role, time today vs. with Cabaka, rating and quote.
+   Then fill the 3 remaining TBDs (report section 7 ×2, slide 8) and rebuild with `python scripts/build_docs.py`.
+2. Optional: demo video (2–3 min).
+3. The day you submit: open the live link so the free server is awake; check the key has not expired (keys expire on a date you chose; the first ones expired Nov 20, 2026).
+4. Submit on Canvas: the repo link, report.html, slides.html.
 
 ## Notes
-- Python 3.12 is at `C:\Users\carso\AppData\Local\Programs\Python\Python312-arm64\python.exe`; project venv is `.venv`.
-- Git is at `%LOCALAPPDATA%\Programs\Git\cmd\git.exe` (not on PATH in older shells).
-- Research PDFs in the Cabaka Google Drive are OneDrive cloud-only files and could not be opened from Claude Code.
-- Estimated cost: ~$0.15–0.40 per run; the whole project ~$5–10. The app stops at $5/day (`CABAKA_DAILY_BUDGET_USD`).
+- Python venv: `.venv`. Git: `C:\Program Files\Git\cmd\git.exe`.
+- Run locally: `.venv\Scripts\python.exe app.py` → http://localhost:5000. Deep links: `#maria_bronx`, `#run=<id>`, `#run=<id>&full`.
+- Never paste the API key into chat. It lives only in `.env` (git-ignored) and in Render's Environment page.

@@ -191,7 +191,9 @@ async function openFromHash() {
   const h = decodeURIComponent(location.hash.slice(1));
   if (!h) return;
   if (h.startsWith("run=")) {
-    const run = await (await fetch("/api/runs/" + h.slice(4))).json();
+    const [id, mode] = h.slice(4).split("&");
+    $("#timeline").classList.toggle("full", mode === "full");  // full = whole trace, no scroll box
+    const run = await (await fetch("/api/runs/" + id)).json();
     if (run.error) return;
     select(run.applicant_id);
     if (run.notes_override != null) $("#dNotes").value = run.notes_override;

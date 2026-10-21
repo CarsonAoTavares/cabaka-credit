@@ -1,0 +1,791 @@
+{
+ "id": "20261021-011159-272ca3",
+ "applicant_id": "kwame_staten",
+ "status": "done",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 1.6,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 480,
+   "output": 128,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000112
+  },
+  {
+   "t": 1.6,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "Notes contain no commands directed at an AI system",
+     "No requests to ignore rules, approve the loan, change rates, or reveal instructions or other data",
+     "Content describes ordinary applicant circumstances only"
+    ],
+    "safe_summary": "Applicant reports variable weekly income and a need for an implant following an infection."
+   }
+  },
+  {
+   "t": 1.6,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 235,
+   "cache_read": 1462,
+   "cache_write": 606,
+   "cost_usd": 0.008038
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 5341.38,
+    "income_volatility_pct": 24.0,
+    "avg_monthly_essential_spend": 3350.24,
+    "avg_monthly_debt_payments": 505.0,
+    "avg_monthly_discretionary_spend": 247.71,
+    "monthly_residual_income": 1486.14,
+    "min_balance_90d": -1328.84,
+    "overdraft_count_90d": 4
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 605,
+    "score_excluding_medical_collections": 631,
+    "medical_collections_total": 640.0,
+    "medical_collections": [
+     {
+      "amount": 640,
+      "creditor": "Urgent care 2025"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "car lease",
+      "balance": 11200,
+      "monthly_payment": 420
+     },
+     {
+      "type": "credit card",
+      "balance": 2300,
+      "monthly_payment": 85
+     }
+    ],
+    "late_payments_24m_non_medical": 2,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "lookup_procedure_benchmark",
+   "input": {
+    "procedure_code": "D6010"
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "lookup_procedure_benchmark",
+   "output": {
+    "procedure_code": "D6010",
+    "name": "Dental implant, single tooth",
+    "fair_price_low": 3000,
+    "fair_price_high": 5000,
+    "source": "Demo benchmark range (illustrative; replace with ADA fee survey data)"
+   }
+  },
+  {
+   "t": 4.24,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_financial_assistance",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 4.25,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_financial_assistance",
+   "output": {
+    "household_size": 4,
+    "annual_income": 52000,
+    "poverty_guideline": 33000,
+    "income_pct_of_fpl": 157.6,
+    "assistance_tier": "likely FREE care under a typical nonprofit-hospital financial assistance policy",
+    "provider_is_nonprofit": false,
+    "source": "HHS 2026 Poverty Guidelines, 48 contiguous states and DC (ASPE, Jan 2026)"
+   }
+  },
+  {
+   "t": 14.15,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 902,
+   "cache_read": 2068,
+   "cache_write": 997,
+   "cost_usd": 0.023447
+  },
+  {
+   "t": 14.15,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "refer_to_human",
+    "risk_tier": "C",
+    "max_affordable_monthly_payment": 297,
+    "key_findings": [
+     "Quote $5,200 is above fair-price range $3,000\u2013$5,000 for D6010",
+     "Household income 157.6% of FPL; would likely get free care at a nonprofit hospital, but this provider is a for-profit practice",
+     "Monthly residual income $1,486.14; income volatility 24.0% (just under the 25% limit)",
+     "4 overdrafts in 90 days; lowest balance -$1,328.84",
+     "Credit score without medical collections: 631 (raw score 605); 2 late payments on non-medical accounts in 24 months; existing debt payments $505/mo"
+    ],
+    "conditions": [
+     "Ask the provider to bring the price down to the benchmark range ($5,000 or less), or get a second quote",
+     "Before lending, refer the patient to nonprofit or FQHC dental clinics and dental school clinics that offer charity or sliding-fee care",
+     "Set payments on a flexible weekly or biweekly schedule to match rideshare income",
+     "Loan officer to confirm the payment cap figure"
+    ],
+    "rationale": "Charity care and fair price come first. The quote is above the benchmark, and at 157.6% of FPL the applicant would likely get free care at a nonprofit hospital. So the first step should be steering him to lower-cost care. If he still needs financing, his cash flow can support a modest payment. Policy caps payment at 40% of residual income ($1,486.14), and the cap must be lower because of the 4 overdrafts. I set it at about half the 40% level. That figure is a manual estimate, not a tool output, and the officer should confirm it. Decision based on cash flow and the 631 score without medical collections."
+   }
+  },
+  {
+   "t": 14.15,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 334,
+   "cache_read": 1759,
+   "cache_write": 1226,
+   "cost_usd": 0.013178
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "thought",
+   "text": "Running the calculations in parallel."
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 5200,
+    "apr_pct": 12,
+    "months": 24
+   }
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 5200.0,
+    "apr_pct": 12,
+    "months": 24,
+    "monthly_payment": 244.78,
+    "total_interest": 674.77,
+    "total_paid": 5874.77
+   }
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "simulate_deferred_interest_card",
+   "input": {
+    "principal": 5200,
+    "monthly_payment": 297,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99
+   }
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "simulate_deferred_interest_card",
+   "output": {
+    "principal": 5200.0,
+    "monthly_payment": 297.0,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99,
+    "paid_off_in_promo": false,
+    "balance_at_promo_end": 1636.0,
+    "retroactive_interest_charged": 1403.48,
+    "payment_needed_to_avoid_penalty": 433.33
+   }
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 5000,
+    "apr_pct": 0,
+    "months": 24
+   }
+  },
+  {
+   "t": 17.84,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 5000.0,
+    "apr_pct": 0,
+    "months": 24,
+    "monthly_payment": 208.33,
+    "total_interest": 0.0,
+    "total_paid": 5000.0
+   }
+  },
+  {
+   "t": 21.19,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 304,
+   "cache_read": 2985,
+   "cache_write": 670,
+   "cost_usd": 0.010035
+  },
+  {
+   "t": 21.19,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "kwame_staten",
+    "new_monthly_payment": 244.78
+   }
+  },
+  {
+   "t": 21.2,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 150000,
+    "planned_purchase_in_months": 24,
+    "estimated_mortgage_payment_piti": 1110.32,
+    "back_end_dti_pct": 42.9,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1113.55,
+    "projected_credit_score": 605,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 21.2,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "kwame_staten",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": true
+   }
+  },
+  {
+   "t": 21.2,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 150000,
+    "planned_purchase_in_months": 24,
+    "estimated_mortgage_payment_piti": 1110.32,
+    "back_end_dti_pct": 37.3,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1358.33,
+    "projected_credit_score": 545,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 21.2,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "kwame_staten",
+    "new_monthly_payment": 208.33
+   }
+  },
+  {
+   "t": 21.21,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 150000,
+    "planned_purchase_in_months": 24,
+    "estimated_mortgage_payment_piti": 1110.32,
+    "back_end_dti_pct": 42.1,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1150.0,
+    "projected_credit_score": 605,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 31.76,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 3,
+   "input": 2,
+   "output": 1055,
+   "cache_read": 3655,
+   "cache_write": 928,
+   "cost_usd": 0.026479
+  },
+  {
+   "t": 31.76,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "Sliding-fee / charity dental care, or a negotiated price",
+      "type": "financial_assistance",
+      "principal": 5000,
+      "monthly_payment": 208.33,
+      "apr_pct": 0,
+      "months": 24,
+      "total_cost": 5000,
+      "worst_case_cost": 5000,
+      "mortgage_ready_after": false,
+      "pros": "Nonprofit, FQHC or dental-school clinics may charge far less. If he finances a price at the $5,000 benchmark at 0% over 24 months, the payment is $208.33 with no interest. This option keeps his debt-to-income ratio lowest (42.1%).",
+      "cons": "Clinic eligibility and wait times are not confirmed. The infection may make waiting unsafe. The $640 urgent-care collection still keeps his score at 605, below the 620 minimum."
+     },
+     {
+      "name": "Cabaka installment loan, 24 months at 12%",
+      "type": "cabaka_installment",
+      "principal": 5200,
+      "monthly_payment": 244.78,
+      "apr_pct": 12,
+      "months": 24,
+      "total_cost": 5874.77,
+      "worst_case_cost": 5874.77,
+      "mortgage_ready_after": false,
+      "pros": "The payment is below the $297 cap. Interest is never charged backward. Payments can be set weekly or biweekly to match rideshare income.",
+      "cons": "Interest totals $674.77. Debt-to-income would be 42.9%, just under the 43% limit. The score stays at 605 unless the old collection is resolved."
+     },
+     {
+      "name": "12-month 0% deferred-interest medical card",
+      "type": "deferred_interest_card",
+      "principal": 5200,
+      "monthly_payment": 297,
+      "apr_pct": 26.99,
+      "months": 12,
+      "total_cost": 6603.48,
+      "worst_case_cost": 6603.48,
+      "mortgage_ready_after": false,
+      "pros": "0% interest only if the full balance is paid within 12 months.",
+      "cons": "Paying it off in time takes $433.33 a month, which is above his cap. At $297 a month, $1,636 is still owed at month 12 and $1,403.48 of interest is charged back to day one."
+     }
+    ],
+    "recommended_offer_name": "Sliding-fee / charity dental care, or a negotiated price",
+    "why": "First, lower the price: a sliding-fee clinic, a second quote, or getting the provider down to $5,000 or less. If he still needs a loan, use the Cabaka 24-month loan at $244.78 a month on a flexible schedule, and avoid the card ($6,603.48 worst case). None of the three options makes him mortgage-ready, because his projected score of 605 is below the 620 minimum. The fix is the existing $640 urgent-care collection: his score is 631 without medical collections, so paying, settling or disputing it is worth doing. If this bill also goes to collections with no plan, his score falls to 545. The officer should confirm the $297 cap, which was a manual estimate."
+   }
+  },
+  {
+   "t": 31.76,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 48.78,
+   "agent": "Compliance",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 1663,
+   "cache_read": 1005,
+   "cache_write": 2290,
+   "cost_usd": 0.044927
+  },
+  {
+   "t": 48.79,
+   "agent": "Compliance",
+   "kind": "final",
+   "tool": "submit_review",
+   "output": {
+    "policy_checks": [
+     {
+      "check": "Affordability",
+      "passed": false,
+      "detail": "The $297 payment cap is a manual estimate (about half of 40% of $1,486.14 residual income), not a tool output. It must be confirmed. Other risks: 4 overdrafts, 24.0% income swings (limit 25%), and the Cabaka loan's 42.9% DTI is just under the 43% limit. The recommended $208.33 payment (42.1% DTI) is the lowest option."
+     },
+     {
+      "check": "Fair pricing",
+      "passed": true,
+      "detail": "The $5,200 quote is above the $3,000\u2013$5,000 benchmark for D6010. The recommendation puts charity or sliding-fee care, a second quote, or a price cut to $5,000 or less first."
+     },
+     {
+      "check": "No deferred-interest trap recommended",
+      "passed": true,
+      "detail": "The 26.99% deferred-interest card is not recommended. Its worst case is $6,603.48, and paying it off in time takes $433.33 a month, which is above the cap."
+     },
+     {
+      "check": "Fair lending (ECOA)",
+      "passed": true,
+      "detail": "The decision rests on cash flow, credit score (631 without medical collections), late payments and debt. No protected traits were used."
+     },
+     {
+      "check": "Clear disclosure of APR / total cost",
+      "passed": true,
+      "detail": "Every offer shows its APR, months, monthly payment, total cost and worst-case cost. Note: the 0% 24-month terms on the assistance option assume a $5,000 price that has not been confirmed."
+     }
+    ],
+    "approved_for_borrower": false,
+    "borrower_letter": "Dear Kwame,\n\nThank you for applying. A loan officer will make the final decision. Nothing here is an approval.\n\nOur suggestion: first try to lower the price of your implant. You could ask this dentist to charge $5,000 or less, get a second quote, or check nonprofit, community or dental-school clinics that charge less. If the price is $5,000 and you pay it at 0% APR over 24 months, you would pay $208.33 a month. The total cost would be $5,000, with no interest.\n\nIf you still need a loan, our 24-month loan at 12% APR costs $244.78 a month. The total cost is $5,874.77. You can pay weekly or every two weeks. Please avoid the deferred-interest card. It could cost $6,603.48.\n\nYour home goal: none of these choices alone gets your score to the 620 a mortgage needs. Your score is 631 without the $640 urgent-care bill in collections. Paying, settling or disputing that bill could help a lot. Keeping your debt low also helps.\n\nBecause of your infection, please don't put off care that you need now.\n\nCabaka Credit",
+    "officer_summary": "The recommendation is to steer the applicant to a lower price first (sliding-fee clinic, second quote, or a price at or below $5,000), with the 12% Cabaka 24-month loan ($244.78 a month, flexible schedule) as the backup; the deferred-interest card is correctly not recommended. The $297 cap is a manual estimate and must be confirmed; risks include 4 overdrafts, 24.0% income swings and a 42.9% DTI on the loan. All options leave the score at 605, below the 620 mortgage minimum, so resolving the $640 collection should be advised, and the infection may make delaying care unsafe."
+   }
+  },
+  {
+   "t": 48.8,
+   "agent": "Verifier",
+   "kind": "final",
+   "output": {
+    "all_passed": true,
+    "checks": [
+     {
+      "check": "Recommended offer exists",
+      "passed": true,
+      "detail": "recommended_offer_name = 'Sliding-fee / charity dental care, or a negotiated price'"
+     },
+     {
+      "check": "Payment <= 40% of residual income",
+      "passed": true,
+      "detail": "payment $208.33 vs cap $594.46 (residual $1486.14)"
+     },
+     {
+      "check": "APR <= 18% policy cap",
+      "passed": true,
+      "detail": "APR 0%"
+     },
+     {
+      "check": "No deferred-interest product recommended",
+      "passed": true,
+      "detail": "type = financial_assistance"
+     },
+     {
+      "check": "Payment math re-computed",
+      "passed": true,
+      "detail": "agent $208.33 vs calculator $208.33"
+     },
+     {
+      "check": "Every number in the letter traces to a tool",
+      "passed": true,
+      "detail": "all numbers verified"
+     },
+     {
+      "check": "No prohibited-basis language (ECOA)",
+      "passed": true,
+      "detail": "none"
+     },
+     {
+      "check": "No system-prompt leak",
+      "passed": true,
+      "detail": "canary absent"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "product": "medical",
+  "applicant": {
+   "id": "kwame_staten",
+   "name": "Kwame Mensah",
+   "location": {
+    "city": "Staten Island",
+    "county": "Richmond County, NY",
+    "state": "NY",
+    "rural": false
+   },
+   "product": "medical"
+  },
+  "gatekeeper": {
+   "injection_detected": false,
+   "risk_level": "none",
+   "reasons": [
+    "Notes contain no commands directed at an AI system",
+    "No requests to ignore rules, approve the loan, change rates, or reveal instructions or other data",
+    "Content describes ordinary applicant circumstances only"
+   ],
+   "safe_summary": "Applicant reports variable weekly income and a need for an implant following an infection."
+  },
+  "underwriting": {
+   "decision_recommendation": "refer_to_human",
+   "risk_tier": "C",
+   "max_affordable_monthly_payment": 297,
+   "key_findings": [
+    "Quote $5,200 is above fair-price range $3,000\u2013$5,000 for D6010",
+    "Household income 157.6% of FPL; would likely get free care at a nonprofit hospital, but this provider is a for-profit practice",
+    "Monthly residual income $1,486.14; income volatility 24.0% (just under the 25% limit)",
+    "4 overdrafts in 90 days; lowest balance -$1,328.84",
+    "Credit score without medical collections: 631 (raw score 605); 2 late payments on non-medical accounts in 24 months; existing debt payments $505/mo"
+   ],
+   "conditions": [
+    "Ask the provider to bring the price down to the benchmark range ($5,000 or less), or get a second quote",
+    "Before lending, refer the patient to nonprofit or FQHC dental clinics and dental school clinics that offer charity or sliding-fee care",
+    "Set payments on a flexible weekly or biweekly schedule to match rideshare income",
+    "Loan officer to confirm the payment cap figure"
+   ],
+   "rationale": "Charity care and fair price come first. The quote is above the benchmark, and at 157.6% of FPL the applicant would likely get free care at a nonprofit hospital. So the first step should be steering him to lower-cost care. If he still needs financing, his cash flow can support a modest payment. Policy caps payment at 40% of residual income ($1,486.14), and the cap must be lower because of the 4 overdrafts. I set it at about half the 40% level. That figure is a manual estimate, not a tool output, and the officer should confirm it. Decision based on cash flow and the 631 score without medical collections."
+  },
+  "offers": {
+   "offers": [
+    {
+     "name": "Sliding-fee / charity dental care, or a negotiated price",
+     "type": "financial_assistance",
+     "principal": 5000,
+     "monthly_payment": 208.33,
+     "apr_pct": 0,
+     "months": 24,
+     "total_cost": 5000,
+     "worst_case_cost": 5000,
+     "mortgage_ready_after": false,
+     "pros": "Nonprofit, FQHC or dental-school clinics may charge far less. If he finances a price at the $5,000 benchmark at 0% over 24 months, the payment is $208.33 with no interest. This option keeps his debt-to-income ratio lowest (42.1%).",
+     "cons": "Clinic eligibility and wait times are not confirmed. The infection may make waiting unsafe. The $640 urgent-care collection still keeps his score at 605, below the 620 minimum."
+    },
+    {
+     "name": "Cabaka installment loan, 24 months at 12%",
+     "type": "cabaka_installment",
+     "principal": 5200,
+     "monthly_payment": 244.78,
+     "apr_pct": 12,
+     "months": 24,
+     "total_cost": 5874.77,
+     "worst_case_cost": 5874.77,
+     "mortgage_ready_after": false,
+     "pros": "The payment is below the $297 cap. Interest is never charged backward. Payments can be set weekly or biweekly to match rideshare income.",
+     "cons": "Interest totals $674.77. Debt-to-income would be 42.9%, just under the 43% limit. The score stays at 605 unless the old collection is resolved."
+    },
+    {
+     "name": "12-month 0% deferred-interest medical card",
+     "type": "deferred_interest_card",
+     "principal": 5200,
+     "monthly_payment": 297,
+     "apr_pct": 26.99,
+     "months": 12,
+     "total_cost": 6603.48,
+     "worst_case_cost": 6603.48,
+     "mortgage_ready_after": false,
+     "pros": "0% interest only if the full balance is paid within 12 months.",
+     "cons": "Paying it off in time takes $433.33 a month, which is above his cap. At $297 a month, $1,636 is still owed at month 12 and $1,403.48 of interest is charged back to day one."
+    }
+   ],
+   "recommended_offer_name": "Sliding-fee / charity dental care, or a negotiated price",
+   "why": "First, lower the price: a sliding-fee clinic, a second quote, or getting the provider down to $5,000 or less. If he still needs a loan, use the Cabaka 24-month loan at $244.78 a month on a flexible schedule, and avoid the card ($6,603.48 worst case). None of the three options makes him mortgage-ready, because his projected score of 605 is below the 620 minimum. The fix is the existing $640 urgent-care collection: his score is 631 without medical collections, so paying, settling or disputing it is worth doing. If this bill also goes to collections with no plan, his score falls to 545. The officer should confirm the $297 cap, which was a manual estimate."
+  },
+  "review": {
+   "policy_checks": [
+    {
+     "check": "Affordability",
+     "passed": false,
+     "detail": "The $297 payment cap is a manual estimate (about half of 40% of $1,486.14 residual income), not a tool output. It must be confirmed. Other risks: 4 overdrafts, 24.0% income swings (limit 25%), and the Cabaka loan's 42.9% DTI is just under the 43% limit. The recommended $208.33 payment (42.1% DTI) is the lowest option."
+    },
+    {
+     "check": "Fair pricing",
+     "passed": true,
+     "detail": "The $5,200 quote is above the $3,000\u2013$5,000 benchmark for D6010. The recommendation puts charity or sliding-fee care, a second quote, or a price cut to $5,000 or less first."
+    },
+    {
+     "check": "No deferred-interest trap recommended",
+     "passed": true,
+     "detail": "The 26.99% deferred-interest card is not recommended. Its worst case is $6,603.48, and paying it off in time takes $433.33 a month, which is above the cap."
+    },
+    {
+     "check": "Fair lending (ECOA)",
+     "passed": true,
+     "detail": "The decision rests on cash flow, credit score (631 without medical collections), late payments and debt. No protected traits were used."
+    },
+    {
+     "check": "Clear disclosure of APR / total cost",
+     "passed": true,
+     "detail": "Every offer shows its APR, months, monthly payment, total cost and worst-case cost. Note: the 0% 24-month terms on the assistance option assume a $5,000 price that has not been confirmed."
+    }
+   ],
+   "approved_for_borrower": false,
+   "borrower_letter": "Dear Kwame,\n\nThank you for applying. A loan officer will make the final decision. Nothing here is an approval.\n\nOur suggestion: first try to lower the price of your implant. You could ask this dentist to charge $5,000 or less, get a second quote, or check nonprofit, community or dental-school clinics that charge less. If the price is $5,000 and you pay it at 0% APR over 24 months, you would pay $208.33 a month. The total cost would be $5,000, with no interest.\n\nIf you still need a loan, our 24-month loan at 12% APR costs $244.78 a month. The total cost is $5,874.77. You can pay weekly or every two weeks. Please avoid the deferred-interest card. It could cost $6,603.48.\n\nYour home goal: none of these choices alone gets your score to the 620 a mortgage needs. Your score is 631 without the $640 urgent-care bill in collections. Paying, settling or disputing that bill could help a lot. Keeping your debt low also helps.\n\nBecause of your infection, please don't put off care that you need now.\n\nCabaka Credit",
+   "officer_summary": "The recommendation is to steer the applicant to a lower price first (sliding-fee clinic, second quote, or a price at or below $5,000), with the 12% Cabaka 24-month loan ($244.78 a month, flexible schedule) as the backup; the deferred-interest card is correctly not recommended. The $297 cap is a manual estimate and must be confirmed; risks include 4 overdrafts, 24.0% income swings and a 42.9% DTI on the loan. All options leave the score at 605, below the 620 mortgage minimum, so resolving the $640 collection should be advised, and the infection may make delaying care unsafe."
+  },
+  "hard_checks": [
+   {
+    "check": "Recommended offer exists",
+    "passed": true,
+    "detail": "recommended_offer_name = 'Sliding-fee / charity dental care, or a negotiated price'"
+   },
+   {
+    "check": "Payment <= 40% of residual income",
+    "passed": true,
+    "detail": "payment $208.33 vs cap $594.46 (residual $1486.14)"
+   },
+   {
+    "check": "APR <= 18% policy cap",
+    "passed": true,
+    "detail": "APR 0%"
+   },
+   {
+    "check": "No deferred-interest product recommended",
+    "passed": true,
+    "detail": "type = financial_assistance"
+   },
+   {
+    "check": "Payment math re-computed",
+    "passed": true,
+    "detail": "agent $208.33 vs calculator $208.33"
+   },
+   {
+    "check": "Every number in the letter traces to a tool",
+    "passed": true,
+    "detail": "all numbers verified"
+   },
+   {
+    "check": "No prohibited-basis language (ECOA)",
+    "passed": true,
+    "detail": "none"
+   },
+   {
+    "check": "No system-prompt leak",
+    "passed": true,
+    "detail": "canary absent"
+   }
+  ],
+  "status": "ready_for_officer",
+  "cash_flow": {
+   "months_of_data": 3,
+   "avg_monthly_income": 5341.38,
+   "income_volatility_pct": 24.0,
+   "avg_monthly_essential_spend": 3350.24,
+   "avg_monthly_debt_payments": 505.0,
+   "avg_monthly_discretionary_spend": 247.71,
+   "monthly_residual_income": 1486.14,
+   "min_balance_90d": -1328.84,
+   "overdraft_count_90d": 4
+  }
+ },
+ "error": null,
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 480,
+   "output": 128,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000112
+  },
+  "Underwriter": {
+   "model": "claude-opus-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1137,
+   "cache_read": 3530,
+   "cache_write": 1603,
+   "cost_usd": 0.031485
+  },
+  "Offer Architect": {
+   "model": "claude-opus-5-5",
+   "calls": 3,
+   "input": 8,
+   "output": 1693,
+   "cache_read": 8399,
+   "cache_write": 2824,
+   "cost_usd": 0.049692
+  },
+  "Compliance": {
+   "model": "claude-opus-5-5",
+   "calls": 1,
+   "input": 4,
+   "output": 1663,
+   "cache_read": 1005,
+   "cache_write": 2290,
+   "cost_usd": 0.044927
+  }
+ },
+ "totals": {
+  "input": 498,
+  "output": 4621,
+  "cache_read": 12934,
+  "cache_write": 6717,
+  "cost_usd": 0.12622,
+  "seconds": 48.8
+ }
+}

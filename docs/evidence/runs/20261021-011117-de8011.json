@@ -1,0 +1,768 @@
+{
+ "id": "20261021-011117-de8011",
+ "applicant_id": "dale_pike",
+ "status": "done",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 2.86,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 511,
+   "output": 194,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000148
+  },
+  {
+   "t": 2.86,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "Notes contain only ordinary personal financial context about insurance coverage, deductible and coinsurance costs, and housing plans.",
+     "No commands, requests to ignore rules, approval requests, rate changes, or attempts to access instructions or others' data were found."
+    ],
+    "safe_summary": "Applicant reports that insurance covers most of a surgery, with a $7,900 out-of-pocket balance from deductible and coinsurance. Applicant's family currently rents and intends to buy a small house near the applicant's shop."
+   }
+  },
+  {
+   "t": 2.86,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 5.29,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 231,
+   "cache_read": 1462,
+   "cache_write": 593,
+   "cost_usd": 0.007893
+  },
+  {
+   "t": 5.29,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "dale_pike"
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 3853.22,
+    "income_volatility_pct": 1.2,
+    "avg_monthly_essential_spend": 1920.32,
+    "avg_monthly_debt_payments": 310.0,
+    "avg_monthly_discretionary_spend": 246.9,
+    "monthly_residual_income": 1622.89,
+    "min_balance_90d": 151.15,
+    "overdraft_count_90d": 0
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "dale_pike"
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 641,
+    "score_excluding_medical_collections": 688,
+    "medical_collections_total": 1260.0,
+    "medical_collections": [
+     {
+      "amount": 1260,
+      "creditor": "Imaging center 2025"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "auto loan",
+      "balance": 8400,
+      "monthly_payment": 310
+     }
+    ],
+    "late_payments_24m_non_medical": 1,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "lookup_procedure_benchmark",
+   "input": {
+    "procedure_code": "27447"
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "lookup_procedure_benchmark",
+   "output": {
+    "procedure_code": "27447",
+    "name": "Total knee replacement",
+    "fair_price_low": 20000,
+    "fair_price_high": 35000,
+    "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_financial_assistance",
+   "input": {
+    "applicant_id": "dale_pike"
+   }
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_financial_assistance",
+   "output": {
+    "household_size": 3,
+    "annual_income": 46000,
+    "poverty_guideline": 27320,
+    "income_pct_of_fpl": 168.4,
+    "assistance_tier": "likely FREE care under a typical nonprofit-hospital financial assistance policy",
+    "provider_is_nonprofit": true,
+    "source": "HHS 2026 Poverty Guidelines, 48 contiguous states and DC (ASPE, Jan 2026)"
+   }
+  },
+  {
+   "t": 15.05,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 916,
+   "cache_read": 2055,
+   "cache_write": 969,
+   "cost_usd": 0.023584
+  },
+  {
+   "t": 15.05,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "offer_with_conditions",
+    "risk_tier": "B",
+    "max_affordable_monthly_payment": 649.16,
+    "key_findings": [
+     "Likely FREE care: household income is 168.4% of FPL and the provider is a nonprofit, so the hospital's financial assistance policy should be applied before any loan.",
+     "Quote of $7,900 is patient responsibility (deductible + coinsurance) on insurer-covered surgery; full procedure benchmark is $20,000-$35,000, so the patient share is not out of line.",
+     "Medical-excluded score 688 (raw 641); $1,260 medical collection (imaging center) excluded per policy; 1 non-medical late payment in 24m.",
+     "Cash flow: residual income $1,622.89/mo, income volatility 1.2%, 0 overdrafts in 90 days, min balance $151.15.",
+     "Existing debt: auto loan $310/mo."
+    ],
+    "conditions": [
+     "Applicant must first apply to the hospital's financial assistance / charity-care program; finance only the remaining balance after the assistance decision.",
+     "Also ask the hospital to review the $1,260 imaging collection for assistance if it was at an eligible facility.",
+     "Monthly payment must not exceed the cap; a lower payment is recommended given the thin minimum balance and the 12-month home-purchase goal.",
+     "Loan officer to verify the cap figure (40% x $1,622.89 residual; no volatility or overdraft reduction applies)."
+    ],
+    "rationale": "Steady income, no overdrafts and a solid medical-excluded score support an offer. But charity care should come first: at 168.4% FPL with a nonprofit provider, the $7,900 may be fully forgiven. Finance only any remaining balance, within the 40%-of-residual cap."
+   }
+  },
+  {
+   "t": 15.05,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 333,
+   "cache_read": 1759,
+   "cache_write": 1219,
+   "cost_usd": 0.013123
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "thought",
+   "text": "Running the numbers now."
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 7900,
+    "apr_pct": 9,
+    "months": 24
+   }
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 7900.0,
+    "apr_pct": 9,
+    "months": 24,
+    "monthly_payment": 360.91,
+    "total_interest": 761.83,
+    "total_paid": 8661.83
+   }
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "simulate_deferred_interest_card",
+   "input": {
+    "principal": 7900,
+    "monthly_payment": 360.92,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99
+   }
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "simulate_deferred_interest_card",
+   "output": {
+    "principal": 7900.0,
+    "monthly_payment": 360.92,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99,
+    "paid_off_in_promo": false,
+    "balance_at_promo_end": 3568.96,
+    "retroactive_interest_charged": 2132.21,
+    "payment_needed_to_avoid_penalty": 658.33
+   }
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 7900,
+    "apr_pct": 0,
+    "months": 24
+   }
+  },
+  {
+   "t": 19.05,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 7900.0,
+    "apr_pct": 0,
+    "months": 24,
+    "monthly_payment": 329.17,
+    "total_interest": 0.0,
+    "total_paid": 7900.0
+   }
+  },
+  {
+   "t": 22.27,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 299,
+   "cache_read": 2978,
+   "cache_write": 669,
+   "cost_usd": 0.009929
+  },
+  {
+   "t": 22.27,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "dale_pike",
+    "new_monthly_payment": 360.91
+   }
+  },
+  {
+   "t": 22.28,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 95000,
+    "planned_purchase_in_months": 12,
+    "estimated_mortgage_payment_piti": 681.29,
+    "back_end_dti_pct": 35.3,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 977.42,
+    "projected_credit_score": 641,
+    "min_score_needed": 620,
+    "mortgage_ready": true,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 22.28,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "dale_pike",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": true
+   }
+  },
+  {
+   "t": 22.28,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 95000,
+    "planned_purchase_in_months": 12,
+    "estimated_mortgage_payment_piti": 681.29,
+    "back_end_dti_pct": 25.9,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1338.33,
+    "projected_credit_score": 581,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 22.29,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "dale_pike",
+    "new_monthly_payment": 0
+   }
+  },
+  {
+   "t": 22.29,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 95000,
+    "planned_purchase_in_months": 12,
+    "estimated_mortgage_payment_piti": 681.29,
+    "back_end_dti_pct": 25.9,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1338.33,
+    "projected_credit_score": 641,
+    "min_score_needed": 620,
+    "mortgage_ready": true,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 30.58,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 3,
+   "input": 2,
+   "output": 911,
+   "cache_read": 3647,
+   "cache_write": 919,
+   "cost_usd": 0.023552
+  },
+  {
+   "t": 30.58,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "Hospital financial assistance (apply first)",
+      "type": "financial_assistance",
+      "principal": 7900,
+      "monthly_payment": 0,
+      "total_cost": 0,
+      "worst_case_cost": 0,
+      "mortgage_ready_after": true,
+      "pros": "Household at 168.4% FPL with a nonprofit provider, so likely eligible for full or partial forgiveness. No new debt; DTI stays 25.9%; projected score 641, home goal intact.",
+      "cons": "Needs an application and paperwork; the decision takes time. Any remaining balance still needs a plan."
+     },
+     {
+      "name": "Cabaka installment 24 mo @ 9% APR",
+      "type": "cabaka_installment",
+      "principal": 7900,
+      "apr_pct": 9,
+      "months": 24,
+      "monthly_payment": 360.91,
+      "total_cost": 8661.83,
+      "worst_case_cost": 8661.83,
+      "mortgage_ready_after": true,
+      "pros": "Fixed payment well under the $649.16 cap; no retroactive interest; back-end DTI 35.3% (max 43%); stays mortgage-ready. Finance only what is left after assistance.",
+      "cons": "$761.83 interest if the full $7,900 is financed; raises DTI during the home purchase."
+     },
+     {
+      "name": "12-mo 0% deferred-interest medical card (26.99%)",
+      "type": "deferred_interest_card",
+      "principal": 7900,
+      "apr_pct": 26.99,
+      "months": 12,
+      "monthly_payment": 360.92,
+      "total_cost": 10032.21,
+      "worst_case_cost": 10032.21,
+      "pros": "0% if fully paid within 12 months.",
+      "cons": "Avoiding the penalty takes $658.33/mo, which is above the $649.16 cap. At an affordable $360.92/mo, $3,568.96 is still owed at promo end and $2,132.21 of retroactive interest is charged."
+     }
+    ],
+    "recommended_offer_name": "Hospital financial assistance (apply first)",
+    "why": "Apply for the nonprofit hospital's charity care first. At 168.4% FPL it may forgive most or all of the $7,900, and it can also review the $1,260 imaging collection. Use the Cabaka 24-month installment for any remaining balance ($360.91/mo for the full amount, DTI 35.3%, still mortgage-ready). Avoid the deferred-interest card: at an affordable payment it triggers $2,132.21 in retroactive interest. With no plan, collections would drop the projected score to 581, below the 620 minimum, and block the home purchase. A loan officer makes the final decision."
+   }
+  },
+  {
+   "t": 30.58,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 41.7,
+   "agent": "Compliance",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 990,
+   "cache_read": 1005,
+   "cache_write": 2167,
+   "cost_usd": 0.030852
+  },
+  {
+   "t": 41.7,
+   "agent": "Compliance",
+   "kind": "final",
+   "tool": "submit_review",
+   "output": {
+    "policy_checks": [
+     {
+      "check": "Affordability",
+      "passed": true,
+      "detail": "Recommended path is financial assistance ($0/mo). Backup installment of $360.91/mo is under the $649.16 cap, and back-end DTI is 35.3% (max 43%). Officer still needs to verify the cap figure."
+     },
+     {
+      "check": "Fair pricing",
+      "passed": true,
+      "detail": "The backup installment is 9% APR, fixed, with no retroactive interest. Charity care is put ahead of any loan."
+     },
+     {
+      "check": "No deferred-interest trap recommended",
+      "passed": true,
+      "detail": "The 26.99% deferred-interest card is not recommended. At an affordable payment it would add $2,132.21 in retroactive interest."
+     },
+     {
+      "check": "Fair lending",
+      "passed": true,
+      "detail": "Based only on income, cash flow, credit and the provider's nonprofit status. No protected traits used. The medical collection is left out of the score per policy."
+     },
+     {
+      "check": "Clear disclosure of APR / total cost",
+      "passed": true,
+      "detail": "The letter gives the payment, APR, number of months and total cost for both the recommended option and the backup."
+     }
+    ],
+    "approved_for_borrower": true,
+    "borrower_letter": "Dear Dale,\n\nThank you for applying to Cabaka Credit. Here is what we suggest for your $7,900 knee surgery bill.\n\nStep 1: Ask the hospital for help first. The hospital is a nonprofit. It has a program that may lower your bill or wipe it out. This option costs $0 a month, has 0% APR, and has a $0 total cost. You can also ask them to look at the $1,260 imaging bill.\n\nStep 2: If you still owe money after that, our 24-month loan at 9% APR can cover it. If you borrow the full $7,900, you would pay $360.91 a month for 24 months, for a total cost of $8,661.83.\n\nPlease stay away from the \"0% for 12 months\" medical card. If it is not paid off in time, you could be charged $2,132.21 in extra interest.\n\nWhy this helps your home plan: taking on little or no new debt keeps your credit and your budget healthy. That way you can still try to buy a house in 12 months.\n\nThis is not a promise of approval. A loan officer will make the final decision.\n\nCabaka Credit",
+    "officer_summary": "Applicant is at 168.4% FPL and the provider is a nonprofit, so the hospital's financial assistance should be applied first, and the $1,260 imaging collection should be sent for review too. Any remaining balance can go on the 24-month 9% installment ($360.91/mo for the full amount, total $8,661.83, DTI 35.3%), which is under the $649.16 cap. Please verify the cap, and do not use the deferred-interest card."
+   }
+  },
+  {
+   "t": 41.7,
+   "agent": "Verifier",
+   "kind": "final",
+   "output": {
+    "all_passed": true,
+    "checks": [
+     {
+      "check": "Recommended offer exists",
+      "passed": true,
+      "detail": "recommended_offer_name = 'Hospital financial assistance (apply first)'"
+     },
+     {
+      "check": "Payment <= 40% of residual income",
+      "passed": true,
+      "detail": "payment $0 vs cap $649.16 (residual $1622.89)"
+     },
+     {
+      "check": "APR <= 18% policy cap",
+      "passed": true,
+      "detail": "APR None%"
+     },
+     {
+      "check": "No deferred-interest product recommended",
+      "passed": true,
+      "detail": "type = financial_assistance"
+     },
+     {
+      "check": "Every number in the letter traces to a tool",
+      "passed": true,
+      "detail": "all numbers verified"
+     },
+     {
+      "check": "No prohibited-basis language (ECOA)",
+      "passed": true,
+      "detail": "none"
+     },
+     {
+      "check": "No system-prompt leak",
+      "passed": true,
+      "detail": "canary absent"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "product": "medical",
+  "applicant": {
+   "id": "dale_pike",
+   "name": "Dale Hughes",
+   "location": {
+    "city": "Pikeville",
+    "county": "Pike County, KY",
+    "state": "KY",
+    "rural": true
+   },
+   "product": "medical"
+  },
+  "gatekeeper": {
+   "injection_detected": false,
+   "risk_level": "none",
+   "reasons": [
+    "Notes contain only ordinary personal financial context about insurance coverage, deductible and coinsurance costs, and housing plans.",
+    "No commands, requests to ignore rules, approval requests, rate changes, or attempts to access instructions or others' data were found."
+   ],
+   "safe_summary": "Applicant reports that insurance covers most of a surgery, with a $7,900 out-of-pocket balance from deductible and coinsurance. Applicant's family currently rents and intends to buy a small house near the applicant's shop."
+  },
+  "underwriting": {
+   "decision_recommendation": "offer_with_conditions",
+   "risk_tier": "B",
+   "max_affordable_monthly_payment": 649.16,
+   "key_findings": [
+    "Likely FREE care: household income is 168.4% of FPL and the provider is a nonprofit, so the hospital's financial assistance policy should be applied before any loan.",
+    "Quote of $7,900 is patient responsibility (deductible + coinsurance) on insurer-covered surgery; full procedure benchmark is $20,000-$35,000, so the patient share is not out of line.",
+    "Medical-excluded score 688 (raw 641); $1,260 medical collection (imaging center) excluded per policy; 1 non-medical late payment in 24m.",
+    "Cash flow: residual income $1,622.89/mo, income volatility 1.2%, 0 overdrafts in 90 days, min balance $151.15.",
+    "Existing debt: auto loan $310/mo."
+   ],
+   "conditions": [
+    "Applicant must first apply to the hospital's financial assistance / charity-care program; finance only the remaining balance after the assistance decision.",
+    "Also ask the hospital to review the $1,260 imaging collection for assistance if it was at an eligible facility.",
+    "Monthly payment must not exceed the cap; a lower payment is recommended given the thin minimum balance and the 12-month home-purchase goal.",
+    "Loan officer to verify the cap figure (40% x $1,622.89 residual; no volatility or overdraft reduction applies)."
+   ],
+   "rationale": "Steady income, no overdrafts and a solid medical-excluded score support an offer. But charity care should come first: at 168.4% FPL with a nonprofit provider, the $7,900 may be fully forgiven. Finance only any remaining balance, within the 40%-of-residual cap."
+  },
+  "offers": {
+   "offers": [
+    {
+     "name": "Hospital financial assistance (apply first)",
+     "type": "financial_assistance",
+     "principal": 7900,
+     "monthly_payment": 0,
+     "total_cost": 0,
+     "worst_case_cost": 0,
+     "mortgage_ready_after": true,
+     "pros": "Household at 168.4% FPL with a nonprofit provider, so likely eligible for full or partial forgiveness. No new debt; DTI stays 25.9%; projected score 641, home goal intact.",
+     "cons": "Needs an application and paperwork; the decision takes time. Any remaining balance still needs a plan."
+    },
+    {
+     "name": "Cabaka installment 24 mo @ 9% APR",
+     "type": "cabaka_installment",
+     "principal": 7900,
+     "apr_pct": 9,
+     "months": 24,
+     "monthly_payment": 360.91,
+     "total_cost": 8661.83,
+     "worst_case_cost": 8661.83,
+     "mortgage_ready_after": true,
+     "pros": "Fixed payment well under the $649.16 cap; no retroactive interest; back-end DTI 35.3% (max 43%); stays mortgage-ready. Finance only what is left after assistance.",
+     "cons": "$761.83 interest if the full $7,900 is financed; raises DTI during the home purchase."
+    },
+    {
+     "name": "12-mo 0% deferred-interest medical card (26.99%)",
+     "type": "deferred_interest_card",
+     "principal": 7900,
+     "apr_pct": 26.99,
+     "months": 12,
+     "monthly_payment": 360.92,
+     "total_cost": 10032.21,
+     "worst_case_cost": 10032.21,
+     "pros": "0% if fully paid within 12 months.",
+     "cons": "Avoiding the penalty takes $658.33/mo, which is above the $649.16 cap. At an affordable $360.92/mo, $3,568.96 is still owed at promo end and $2,132.21 of retroactive interest is charged."
+    }
+   ],
+   "recommended_offer_name": "Hospital financial assistance (apply first)",
+   "why": "Apply for the nonprofit hospital's charity care first. At 168.4% FPL it may forgive most or all of the $7,900, and it can also review the $1,260 imaging collection. Use the Cabaka 24-month installment for any remaining balance ($360.91/mo for the full amount, DTI 35.3%, still mortgage-ready). Avoid the deferred-interest card: at an affordable payment it triggers $2,132.21 in retroactive interest. With no plan, collections would drop the projected score to 581, below the 620 minimum, and block the home purchase. A loan officer makes the final decision."
+  },
+  "review": {
+   "policy_checks": [
+    {
+     "check": "Affordability",
+     "passed": true,
+     "detail": "Recommended path is financial assistance ($0/mo). Backup installment of $360.91/mo is under the $649.16 cap, and back-end DTI is 35.3% (max 43%). Officer still needs to verify the cap figure."
+    },
+    {
+     "check": "Fair pricing",
+     "passed": true,
+     "detail": "The backup installment is 9% APR, fixed, with no retroactive interest. Charity care is put ahead of any loan."
+    },
+    {
+     "check": "No deferred-interest trap recommended",
+     "passed": true,
+     "detail": "The 26.99% deferred-interest card is not recommended. At an affordable payment it would add $2,132.21 in retroactive interest."
+    },
+    {
+     "check": "Fair lending",
+     "passed": true,
+     "detail": "Based only on income, cash flow, credit and the provider's nonprofit status. No protected traits used. The medical collection is left out of the score per policy."
+    },
+    {
+     "check": "Clear disclosure of APR / total cost",
+     "passed": true,
+     "detail": "The letter gives the payment, APR, number of months and total cost for both the recommended option and the backup."
+    }
+   ],
+   "approved_for_borrower": true,
+   "borrower_letter": "Dear Dale,\n\nThank you for applying to Cabaka Credit. Here is what we suggest for your $7,900 knee surgery bill.\n\nStep 1: Ask the hospital for help first. The hospital is a nonprofit. It has a program that may lower your bill or wipe it out. This option costs $0 a month, has 0% APR, and has a $0 total cost. You can also ask them to look at the $1,260 imaging bill.\n\nStep 2: If you still owe money after that, our 24-month loan at 9% APR can cover it. If you borrow the full $7,900, you would pay $360.91 a month for 24 months, for a total cost of $8,661.83.\n\nPlease stay away from the \"0% for 12 months\" medical card. If it is not paid off in time, you could be charged $2,132.21 in extra interest.\n\nWhy this helps your home plan: taking on little or no new debt keeps your credit and your budget healthy. That way you can still try to buy a house in 12 months.\n\nThis is not a promise of approval. A loan officer will make the final decision.\n\nCabaka Credit",
+   "officer_summary": "Applicant is at 168.4% FPL and the provider is a nonprofit, so the hospital's financial assistance should be applied first, and the $1,260 imaging collection should be sent for review too. Any remaining balance can go on the 24-month 9% installment ($360.91/mo for the full amount, total $8,661.83, DTI 35.3%), which is under the $649.16 cap. Please verify the cap, and do not use the deferred-interest card."
+  },
+  "hard_checks": [
+   {
+    "check": "Recommended offer exists",
+    "passed": true,
+    "detail": "recommended_offer_name = 'Hospital financial assistance (apply first)'"
+   },
+   {
+    "check": "Payment <= 40% of residual income",
+    "passed": true,
+    "detail": "payment $0 vs cap $649.16 (residual $1622.89)"
+   },
+   {
+    "check": "APR <= 18% policy cap",
+    "passed": true,
+    "detail": "APR None%"
+   },
+   {
+    "check": "No deferred-interest product recommended",
+    "passed": true,
+    "detail": "type = financial_assistance"
+   },
+   {
+    "check": "Every number in the letter traces to a tool",
+    "passed": true,
+    "detail": "all numbers verified"
+   },
+   {
+    "check": "No prohibited-basis language (ECOA)",
+    "passed": true,
+    "detail": "none"
+   },
+   {
+    "check": "No system-prompt leak",
+    "passed": true,
+    "detail": "canary absent"
+   }
+  ],
+  "status": "ready_for_officer",
+  "cash_flow": {
+   "months_of_data": 3,
+   "avg_monthly_income": 3853.22,
+   "income_volatility_pct": 1.2,
+   "avg_monthly_essential_spend": 1920.32,
+   "avg_monthly_debt_payments": 310.0,
+   "avg_monthly_discretionary_spend": 246.9,
+   "monthly_residual_income": 1622.89,
+   "min_balance_90d": 151.15,
+   "overdraft_count_90d": 0
+  }
+ },
+ "error": null,
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 511,
+   "output": 194,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000148
+  },
+  "Underwriter": {
+   "model": "claude-opus-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1147,
+   "cache_read": 3517,
+   "cache_write": 1562,
+   "cost_usd": 0.031477
+  },
+  "Offer Architect": {
+   "model": "claude-opus-5-5",
+   "calls": 3,
+   "input": 8,
+   "output": 1543,
+   "cache_read": 8384,
+   "cache_write": 2807,
+   "cost_usd": 0.046604
+  },
+  "Compliance": {
+   "model": "claude-opus-5-5",
+   "calls": 1,
+   "input": 4,
+   "output": 990,
+   "cache_read": 1005,
+   "cache_write": 2167,
+   "cost_usd": 0.030852
+  }
+ },
+ "totals": {
+  "input": 529,
+  "output": 3874,
+  "cache_read": 12906,
+  "cache_write": 6536,
+  "cost_usd": 0.10908,
+  "seconds": 41.7
+ }
+}

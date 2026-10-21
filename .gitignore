@@ -6,3 +6,6 @@ __pycache__/
 logs/usage.jsonl
 logs/runs/
 docs/img/_tests.html
+logs/run_summary.json
+logs/model_comparison.json
+docs/img/_*.png

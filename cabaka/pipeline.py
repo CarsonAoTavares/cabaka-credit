@@ -25,6 +25,8 @@ def applicant_brief(a: dict, notes: str) -> str:
 def new_run(applicant_id: str, notes_override: str | None = None) -> str:
     run_id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
     RUNS[run_id] = {"id": run_id, "applicant_id": applicant_id, "status": "running",
+                    "config": {"main_model": config.MAIN_MODEL, "effort": config.MAIN_EFFORT,
+                               "guard_model": config.GUARD_MODEL},
                     "events": [], "result": None, "error": None, "notes_override": notes_override}
     return run_id
 

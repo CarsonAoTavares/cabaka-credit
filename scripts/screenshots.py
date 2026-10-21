@@ -50,3 +50,7 @@ if __name__ == "__main__":
     elif what == "run":
         shoot(BASE + "#run=" + sys.argv[2], IMG / f"{sys.argv[3]}.png",
               height=int(sys.argv[4]) if len(sys.argv) > 4 else 2400)
+    elif what == "crop":  # crop <src> <dst> x0 y0 x1 y1
+        from PIL import Image
+        Image.open(IMG / f"{sys.argv[2]}.png").crop(tuple(map(int, sys.argv[4:8]))).save(IMG / f"{sys.argv[3]}.png")
+        print("saved", IMG / f"{sys.argv[3]}.png")

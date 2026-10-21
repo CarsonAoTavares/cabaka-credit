@@ -82,11 +82,18 @@
 <section>
   <h2>Cost to run</h2>
   <div class="cols">
-    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">LLM cost per application (measured)</p></div>
-    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">per user per month (60 applications)</p></div>
-    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">10,000 users per month</p></div>
+    <div><div class="big">$0.12</div><p class="muted">per application, measured over 6 real runs (~25k tokens, 46 s)</p></div>
+    <div><div class="big">$7.43</div><p class="muted">per user per month (60 applications)</p></div>
+    <div><div class="big">$74k</div><p class="muted">per month at 10,000 users, vs ~$11,600 to originate one mortgage</p></div>
   </div>
-  <p style="font-size:.55em">Prompt caching · Haiku for screening · Opus at low effort · tools return summaries, not raw data</p>
+  <table style="margin-top:20px">
+    <tr><th>Setting</th><th>Cost/run</th><th>Judgment errors (4 cases)</th></tr>
+    <tr><td><b>Opus · low (shipped)</b></td><td>$0.119</td><td>0</td></tr>
+    <tr><td>Opus · medium</td><td>$0.157</td><td>1: more cost, no gain</td></tr>
+    <tr><td>Sonnet 5.5</td><td>$0.060</td><td>2</td></tr>
+    <tr><td>Haiku 5.5</td><td>$0.0045</td><td>2 serious ("decline" for creditworthy borrowers)</td></tr>
+  </table>
+  <p style="font-size:.5em">Caching saves 26% · Haiku only for the yes/no Gatekeeper · all checks passed for every model, so the errors needed human review</p>
 </section>
 
 <section>
@@ -101,16 +108,20 @@
       <li>Runaway loops → 8-turn cap</li>
       <li>Overspend → $5/day + rate limit</li>
       <li>17 automated tests pass</li>
+      <li>Live red-team run: no $50k loan, no leak</li>
     </ul></div>
   </div>
 </section>
 
 <section>
   <h2>Impact</h2>
-  <div class="cols">
-    <div><div class="big">$1,835</div><p class="muted">retroactive interest Maria avoids vs. a 0% card she can't pay off in time</p></div>
+  <div class="cols" style="font-size:.75em">
+    <div><div class="big">$8,635 → $0</div><p class="muted">Maria's cost: the 0% card at a payment she can afford vs. charity care the agents found</p></div>
     <div><div class="big">$387k → $100k</div><p class="muted">smallest profitable mortgage, if origination falls from ~$11.6k to $3k</p></div>
-    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">real user: time today vs. with Cabaka</p></div>
+  </div>
+  <div class="cols" style="font-size:.75em;margin-top:20px">
+    <div><div class="big">46 s</div><p class="muted">for a full package: underwriting, 3–4 compared options, letter in the borrower's language, checks</p></div>
+    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">real user: time today vs. with Cabaka, plus their quote</p></div>
   </div>
 </section>
 

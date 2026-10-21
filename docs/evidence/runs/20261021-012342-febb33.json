@@ -1,0 +1,491 @@
+{
+ "id": "20261021-012342-febb33",
+ "applicant_id": "maria_bronx",
+ "status": "error",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 1.91,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 506,
+   "output": 152,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000127
+  },
+  {
+   "t": 1.91,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "Notes describe a medical situation and a credit offer without any instructions directed at an AI system",
+     "No attempt to ignore rules, approve the loan, change rates, or reveal instructions or other data"
+    ],
+    "safe_summary": "Applicant notes state that a patient works with her hands and needs surgery to keep her job, and that a 12-month 0% medical credit card was offered at the front desk."
+   }
+  },
+  {
+   "t": 1.91,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 3.49,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 313,
+   "cache_read": 0,
+   "cache_write": 2073,
+   "cost_usd": 0.000416
+  },
+  {
+   "t": 3.49,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_financial_assistance",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 3.49,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_financial_assistance",
+   "output": {
+    "household_size": 2,
+    "annual_income": 38400,
+    "poverty_guideline": 21640,
+    "income_pct_of_fpl": 177.4,
+    "assistance_tier": "likely FREE care under a typical nonprofit-hospital financial assistance policy",
+    "provider_is_nonprofit": true,
+    "source": "HHS 2026 Poverty Guidelines, 48 contiguous states and DC (ASPE, Jan 2026)"
+   }
+  },
+  {
+   "t": 3.49,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 3.5,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 3033.06,
+    "income_volatility_pct": 1.9,
+    "avg_monthly_essential_spend": 1879.06,
+    "avg_monthly_debt_payments": 35.0,
+    "avg_monthly_discretionary_spend": 174.28,
+    "monthly_residual_income": 1119.0,
+    "min_balance_90d": 100.45,
+    "overdraft_count_90d": 0
+   }
+  },
+  {
+   "t": 3.5,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 3.5,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 598,
+    "score_excluding_medical_collections": 664,
+    "medical_collections_total": 2140.0,
+    "medical_collections": [
+     {
+      "amount": 2140,
+      "creditor": "ER visit 2024 (sent to collections)"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "credit card",
+      "balance": 900,
+      "monthly_payment": 35
+     }
+    ],
+    "late_payments_24m_non_medical": 0,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 3.5,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "lookup_procedure_benchmark",
+   "input": {
+    "procedure_code": "64721"
+   }
+  },
+  {
+   "t": 3.5,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "lookup_procedure_benchmark",
+   "output": {
+    "procedure_code": "64721",
+    "name": "Carpal tunnel release",
+    "fair_price_low": 1800,
+    "fair_price_high": 4500,
+    "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"
+   }
+  },
+  {
+   "t": 9.05,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 1142,
+   "cache_read": 2073,
+   "cache_write": 1058,
+   "cost_usd": 0.000724
+  },
+  {
+   "t": 9.05,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "refer_to_human",
+    "risk_tier": "B",
+    "max_affordable_monthly_payment": 447.6,
+    "key_findings": [
+     "Household income is 177.4% of the federal poverty guideline (household of 2), and the provider is a nonprofit hospital. Likely eligible for FREE care under a typical nonprofit financial assistance policy.",
+     "Quoted patient responsibility of $6,800 is well above the demo fair-price benchmark for CPT 64721 ($1,800-$4,500).",
+     "Medical-excluded credit score is 664 (raw 598, driven by one $2,140 ER collection). No non-medical late payments in 24 months.",
+     "Cash flow: avg monthly income $3,033, volatility 1.9%, no overdrafts in 90 days, residual income $1,119/month, existing debt payment $35/month.",
+     "Max affordable payment = 40% of $1,119 = $447.60/month (no volatility or overdraft reduction applies)."
+    ],
+    "conditions": [
+     "Before any loan, refer the applicant for hospital financial assistance (charity care) at the nonprofit surgery center; free or discounted care takes priority over any financing.",
+     "Request an itemized bill and renegotiate the $6,800 quote toward the fair-price range.",
+     "If financing is still needed after charity care is decided, cap the monthly payment at $447.60 and confirm the amount against the benchmark-adjusted balance.",
+     "Provide all disclosures and the application in Spanish.",
+     "Before the applicant accepts the front-desk 0% medical credit card, explain its terms (promotional period, deferred-interest risk, and what happens to any balance left after the promo ends)."
+    ],
+    "rationale": "The applicant is likely eligible for free charity care at a nonprofit provider, which beats any loan under policy. The quote is about 51% above the top of the fair-price range, so it should be disputed or reduced. Cash flow is strong and the medical-excluded score is adequate, so if financing is needed later, the capacity is about $447.60/month. Refer to a loan officer to coordinate charity care and the quote before any financing decision. The 0% card offer should be reviewed for deferred-interest risk before acceptance.\"]"
+   }
+  },
+  {
+   "t": 9.05,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 11.91,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 558,
+   "cache_read": 0,
+   "cache_write": 3139,
+   "cost_usd": 0.000672
+  },
+  {
+   "t": 11.91,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 6800,
+    "apr_pct": 18,
+    "months": 24
+   }
+  },
+  {
+   "t": 11.91,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 6800.0,
+    "apr_pct": 18,
+    "months": 24,
+    "monthly_payment": 339.48,
+    "total_interest": 1347.61,
+    "total_paid": 8147.61
+   }
+  },
+  {
+   "t": 11.91,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "simulate_deferred_interest_card",
+   "input": {
+    "principal": 6800,
+    "monthly_payment": 447.6,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99
+   }
+  },
+  {
+   "t": 11.91,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "simulate_deferred_interest_card",
+   "output": {
+    "principal": 6800.0,
+    "monthly_payment": 447.6,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99,
+    "paid_off_in_promo": false,
+    "balance_at_promo_end": 1428.8,
+    "retroactive_interest_charged": 1835.32,
+    "payment_needed_to_avoid_penalty": 566.67
+   }
+  },
+  {
+   "t": 15.24,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 595,
+   "cache_read": 3139,
+   "cache_write": 807,
+   "cost_usd": 0.00043
+  },
+  {
+   "t": 15.24,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 339.48,
+    "medical_bill_goes_to_collections": false
+   }
+  },
+  {
+   "t": 15.24,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 47.2,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1001.52,
+    "projected_credit_score": 598,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 15.24,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": true
+   }
+  },
+  {
+   "t": 15.24,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 36.6,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1341.0,
+    "projected_credit_score": 538,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 17.86,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 3,
+   "input": 2,
+   "output": 400,
+   "cache_read": 3946,
+   "cache_write": 1013,
+   "cost_usd": 0.000366
+  },
+  {
+   "t": 17.86,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": false
+   }
+  },
+  {
+   "t": 17.87,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 36.6,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1341.0,
+    "projected_credit_score": 598,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 25.98,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 4,
+   "input": 2,
+   "output": 1602,
+   "cache_read": 4959,
+   "cache_write": 579,
+   "cost_usd": 0.000923
+  },
+  {
+   "t": 25.98,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "Hospital financial assistance (charity care) at the nonprofit surgery center",
+      "type": "financial_assistance",
+      "monthly_payment": 0,
+      "total_cost": 0,
+      "pros": "Household income is about 177% of the federal poverty guideline and the provider is nonprofit, so the applicant is likely eligible for free or discounted care under a typical policy. No debt, no interest, no penalty risk. Policy ranks this above any loan.",
+      "cons": "Eligibility is not yet confirmed; the hospital must make the determination. Requires paperwork, ideally in Spanish. Cost would be $0 only if approved. The $6,800 quote should also be disputed against the itemized bill.",
+      "mortgage_ready_after": false,
+      "apr_pct": 0
+     },
+     {
+      "name": "Cabaka installment loan (fallback, 24 months at 18% APR)",
+      "type": "cabaka_installment",
+      "principal": 6800,
+      "apr_pct": 18,
+      "months": 24,
+      "monthly_payment": 339.48,
+      "total_cost": 8147.61,
+      "pros": "Fixed payment of $339.48 is within the $447.60 affordability cap. Predictable schedule with no deferred-interest trap.",
+      "cons": "Costs $1,347.61 in interest. Adds debt to a back-end DTI of 36.6% before any housing payment is counted. Does not make her mortgage-ready on its own. Should be used only if charity care is denied and the bill is not reduced.",
+      "mortgage_ready_after": false
+     },
+     {
+      "name": "0% deferred-interest medical card (12-month promo, 26.99% retroactive APR)",
+      "type": "deferred_interest_card",
+      "principal": 6800,
+      "apr_pct": 26.99,
+      "months": 12,
+      "monthly_payment": 447.6,
+      "total_cost": 8635.32,
+      "monthly_payment_note": "447.60 is the maximum affordable amount; paying it does not clear the balance in 12 months.",
+      "worst_case_cost": 8635.32,
+      "pros": "No interest if the full balance is paid within the 12-month promo period.",
+      "cons": "At $447.60/month, about $1,428.80 remains at promo end. Retroactive interest of $1,835.32 is then charged on the full original principal, so total cost is about $8,635.32. Paying off in 12 months would require about $566.67/month, above her affordable cap. High penalty risk for a patient on a fixed income.",
+      "mortgage_ready_after": false
+     }
+    ],
+    "recommended_offer_name": "Hospital financial assistance (charity care) at the nonprofit surgery center",
+    "why": "Policy requires charity care to be considered before any loan, and she is likely eligible at $0. If denied, the 24-month Cabaka loan at $339.48/month is the lowest-cost financing and stays under the $447.60 cap. The 0% card is high risk: at her affordable payment, the retroactive interest would add about $1,835 and total cost would be about $8,635. Mortgage readiness: none of the options makes her mortgage-ready in the projection. Her DTI is 36.6% without the loan and 47.2% with it, and her projected score is 598 versus the 620 minimum. The existing $2,140 medical collection keeps the score at 598 even with no new payment, so resolving that collection matters for the 18-month home goal. A loan officer should review before any financing decision.",
+    "lender_economics": "Not applicable (no mortgage offered). Cabaka fallback loan: $1,347.61 interest over 24 months at 18% APR."
+   }
+  },
+  {
+   "t": 25.98,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 10378.41,
+   "agent": "System",
+   "kind": "error",
+   "message": "APIConnectionError: Connection error."
+  }
+ ],
+ "result": null,
+ "error": "APIConnectionError: Connection error.",
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 506,
+   "output": 152,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000127
+  },
+  "Underwriter": {
+   "model": "claude-haiku-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1455,
+   "cache_read": 2073,
+   "cache_write": 3131,
+   "cost_usd": 0.00114
+  },
+  "Offer Architect": {
+   "model": "claude-haiku-5-5",
+   "calls": 4,
+   "input": 10,
+   "output": 3155,
+   "cache_read": 12044,
+   "cache_write": 5538,
+   "cost_usd": 0.002391
+  }
+ },
+ "totals": {
+  "input": 522,
+  "output": 4762,
+  "cache_read": 14117,
+  "cache_write": 8669,
+  "cost_usd": 0.00366,
+  "seconds": 10379.2
+ }
+}

@@ -1,0 +1,708 @@
+{
+ "id": "20261021-011248-4cdacd",
+ "applicant_id": "tina_steuben",
+ "status": "done",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 1.92,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 497,
+   "output": 119,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000109
+  },
+  {
+   "t": 1.92,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "Notes describe applicant history and a prior denied application without any commands, instructions, or attempts to alter system behavior."
+    ],
+    "safe_summary": "Applicant applied at a community bank. States a prior application at a large lender was denied last year due to a medical collection related to her daughter's birth."
+   }
+  },
+  {
+   "t": 1.92,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 293,
+   "cache_read": 0,
+   "cache_write": 2245,
+   "cost_usd": 0.017101
+  },
+  {
+   "t": 5.3,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "tina_steuben"
+   }
+  },
+  {
+   "t": 5.31,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 4503.6,
+    "income_volatility_pct": 2.2,
+    "avg_monthly_essential_spend": 2686.99,
+    "avg_monthly_debt_payments": 205.0,
+    "avg_monthly_discretionary_spend": 295.43,
+    "monthly_residual_income": 1611.61,
+    "min_balance_90d": 993.76,
+    "overdraft_count_90d": 0
+   }
+  },
+  {
+   "t": 5.31,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "tina_steuben"
+   }
+  },
+  {
+   "t": 5.31,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 612,
+    "score_excluding_medical_collections": 671,
+    "medical_collections_total": 3400.0,
+    "medical_collections": [
+     {
+      "amount": 3400,
+      "creditor": "Childbirth hospital bill 2024"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "student loan",
+      "balance": 14000,
+      "monthly_payment": 160
+     },
+     {
+      "type": "credit card",
+      "balance": 1200,
+      "monthly_payment": 45
+     }
+    ],
+    "late_payments_24m_non_medical": 0,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 5.31,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "compute_mortgage_ratios",
+   "input": {
+    "applicant_id": "tina_steuben"
+   }
+  },
+  {
+   "t": 5.32,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "compute_mortgage_ratios",
+   "output": {
+    "loan_amount": 112000,
+    "property_value": 120000,
+    "ltv_pct": 93.3,
+    "monthly_principal_interest": 707.92,
+    "monthly_taxes_insurance": 150.0,
+    "front_end_dti_pct": 16.9,
+    "back_end_dti_pct": 20.9,
+    "residual_income_after_housing": 753.69
+   }
+  },
+  {
+   "t": 5.32,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_program_eligibility",
+   "input": {
+    "applicant_id": "tina_steuben"
+   }
+  },
+  {
+   "t": 5.32,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_program_eligibility",
+   "output": {
+    "USDA_502_guaranteed": {
+     "eligible": true,
+     "why": "rural=True, income=78.0% of area median (limit 115%)"
+    },
+    "FHA": {
+     "eligible": true,
+     "why": "score 671 (min 580), LTV 93.3% (max 96.5%)"
+    },
+    "Fannie_HomeReady": {
+     "eligible": true,
+     "why": "score 671 (min 620), income 78.0% AMI (max 80%)"
+    },
+    "note": "Simplified screening rules for demo; a loan officer confirms final eligibility.",
+    "small_loan": true
+   }
+  },
+  {
+   "t": 5.32,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_county_lending_context",
+   "input": {
+    "county": "Steuben County, NY"
+   }
+  },
+  {
+   "t": 5.32,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_county_lending_context",
+   "output": {
+    "county": "Steuben County, NY",
+    "rural": true,
+    "area_median_income": 78000,
+    "credit_history_denial_rate_pct": 30,
+    "source": "Rural credit-history denial rate: Pew analysis of HMDA 2018-2023 (national rural average). AMI illustrative."
+   }
+  },
+  {
+   "t": 13.86,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 850,
+   "cache_read": 2245,
+   "cache_write": 1259,
+   "cost_usd": 0.023752
+  },
+  {
+   "t": 13.86,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "offer_with_conditions",
+    "risk_tier": "B",
+    "max_affordable_monthly_payment": 857.92,
+    "key_findings": [
+     "Medical-excluded score 671 (policy min 620); raw score 612 is lowered only by a $3,400 medical collection",
+     "0 non-medical late payments in 24 months",
+     "Back-end DTI 20.9% (limit 43%); front-end 16.9%",
+     "LTV 93.3%",
+     "Stable income: $4,503.60/mo average, 2.2% volatility, 0 overdrafts in 90 days, lowest balance $993.76",
+     "Residual income after the proposed housing payment: $753.69",
+     "Screens eligible for USDA 502 Guaranteed (rural, 78% of area median income), FHA and HomeReady",
+     "County credit-history denial rate is 30%"
+    ],
+    "conditions": [
+     "Verify employment and income (pay stubs/W-2)",
+     "Confirm a full appraisal at or above $120,000",
+     "Confirm the USDA 502 rural property and income eligibility; it may lower the down payment and mortgage insurance cost",
+     "Confirm funds to close beyond the $8,000 saved",
+     "Loan officer to calculate the exact payment ceiling at 43% DTI"
+    ],
+    "rationale": "Meets all policy tests on the medical-excluded score, cash flow, LTV and DTI. The requested payment ($707.92 principal and interest + $150 taxes and insurance) gives a 20.9% DTI and positive residual income. The reported maximum is that verified payment. The true 43% ceiling is higher, but no tool computed it. Tier B rather than A because of the high LTV and thin reserves."
+   }
+  },
+  {
+   "t": 13.86,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 340,
+   "cache_read": 0,
+   "cache_write": 2608,
+   "cost_usd": 0.019856
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 112000,
+    "apr_pct": 6.25,
+    "months": 360
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 112000.0,
+    "apr_pct": 6.25,
+    "months": 360,
+    "monthly_payment": 689.6,
+    "total_interest": 136257.18,
+    "total_paid": 248257.18
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 112000,
+    "apr_pct": 6.5,
+    "months": 360
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 112000.0,
+    "apr_pct": 6.5,
+    "months": 360,
+    "monthly_payment": 707.92,
+    "total_interest": 142849.83,
+    "total_paid": 254849.83
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 112000,
+    "apr_pct": 6.75,
+    "months": 360
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 112000.0,
+    "apr_pct": 6.75,
+    "months": 360,
+    "monthly_payment": 726.43,
+    "total_interest": 149514.75,
+    "total_paid": 261514.75
+   }
+  },
+  {
+   "t": 17.63,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "estimate_origination_cost",
+   "input": {
+    "loan_amount": 112000
+   }
+  },
+  {
+   "t": 17.64,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "estimate_origination_cost",
+   "output": {
+    "loan_amount": 112000,
+    "lender_revenue_estimate": 3360.0,
+    "traditional_origination_cost": 11600,
+    "agent_assisted_origination_cost": 3000,
+    "profit_traditional": -8240.0,
+    "profit_agent_assisted": 360.0,
+    "breakeven_loan_size_traditional": 386667.0,
+    "breakeven_loan_size_agent_assisted": 100000.0,
+    "source": "Traditional cost: $11,600 average retail cost to originate, Q3 2023 (Freddie Mac 2024 Cost to Originate Study). Agent-assisted cost and 300 bps revenue are Cabaka planning assumptions."
+   }
+  },
+  {
+   "t": 28.18,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 941,
+   "cache_read": 2608,
+   "cache_write": 876,
+   "cost_usd": 0.02373
+  },
+  {
+   "t": 28.18,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "USDA 502 Guaranteed 30-yr",
+      "type": "mortgage",
+      "principal": 112000,
+      "apr_pct": 6.25,
+      "months": 360,
+      "monthly_payment": 689.6,
+      "total_cost": 248257.18,
+      "pros": "Lowest rate and payment; made for rural buyers like this Steuben County property; can need little or no down payment, so more of the $8,000 can go to closing costs and savings",
+      "cons": "Property and income eligibility still need to be confirmed; there is a guarantee fee plus a yearly fee; closing can take longer"
+     },
+     {
+      "name": "FHA 30-yr",
+      "type": "mortgage",
+      "principal": 112000,
+      "apr_pct": 6.5,
+      "months": 360,
+      "monthly_payment": 707.92,
+      "total_cost": 254849.83,
+      "pros": "Flexible credit rules; matches the loan she applied for; well-known product",
+      "cons": "Upfront and yearly mortgage insurance (MIP) that usually lasts the life of the loan at this LTV; costs about $18.32/mo more than USDA"
+     },
+     {
+      "name": "HomeReady 30-yr",
+      "type": "mortgage",
+      "principal": 112000,
+      "apr_pct": 6.75,
+      "months": 360,
+      "monthly_payment": 726.43,
+      "total_cost": 261514.75,
+      "pros": "Mortgage insurance can be cancelled once enough equity is built; backup option if USDA eligibility fails",
+      "cons": "Highest rate and payment; PMI pricing is more sensitive to credit score"
+     }
+    ],
+    "recommended_offer_name": "USDA 502 Guaranteed 30-yr",
+    "why": "Underwriting screened her as eligible for USDA 502 (rural property, 78% of area median income). USDA has the lowest payment ($689.60 principal and interest) and total cost, and keeps more of her savings for closing because her reserves are thin. All three options are under the verified payment of $857.92 including $150 for taxes and insurance. Conditions: verify income, get a full appraisal at or above $120,000, confirm USDA eligibility and funds to close. FHA is the fallback if USDA eligibility fails. A loan officer makes the final decision.",
+    "lender_economics": "Loan of $112,000 with estimated revenue of $3,360. The traditional cost to originate is $11,600, a loss of $8,240 (break-even loan size is about $386,667). The agent-assisted cost is $3,000, a profit of $360 (break-even loan size is $100,000). Source: traditional cost from the Freddie Mac 2024 study; agent-assisted cost and revenue are Cabaka planning assumptions."
+   }
+  },
+  {
+   "t": 28.19,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 38.48,
+   "agent": "Compliance",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 1051,
+   "cache_read": 0,
+   "cache_write": 3186,
+   "cost_usd": 0.036966
+  },
+  {
+   "t": 38.48,
+   "agent": "Compliance",
+   "kind": "final",
+   "tool": "submit_review",
+   "output": {
+    "policy_checks": [
+     {
+      "check": "Affordability",
+      "passed": true,
+      "detail": "Recommended USDA payment of $689.60 principal and interest, plus $150 for taxes and insurance, is within the verified $857.92 payment. Back-end DTI is 20.9% (limit 43%). Residual income is positive. Reserves are thin, so funds to close must be confirmed."
+     },
+     {
+      "check": "Fair pricing",
+      "passed": true,
+      "detail": "Recommended offer has the lowest APR (6.25%) and lowest total cost ($248,257.18) of the three options. The guarantee fee and yearly fee are disclosed as cons."
+     },
+     {
+      "check": "No deferred-interest trap recommended",
+      "passed": true,
+      "detail": "All offers are standard fixed 30-year fully amortizing mortgages. None has deferred interest."
+     },
+     {
+      "check": "Fair lending",
+      "passed": true,
+      "detail": "Decision uses the medical-excluded score (671), cash flow, DTI and LTV. No protected traits or public assistance were used. Underwriting's mention of age is not a factor. The medical collection was rightly set aside."
+     },
+     {
+      "check": "Clear disclosure of APR / total cost",
+      "passed": true,
+      "detail": "APR, months, monthly payment and total cost are given for every offer and stated in the letter. The letter notes that taxes and insurance are separate."
+     }
+    ],
+    "approved_for_borrower": true,
+    "borrower_letter": "Dear Tina,\n\nThank you for applying with us. We looked at your file, and here is the option we think fits you best: the USDA 502 Guaranteed 30-year loan.\n\n- Monthly payment: $689.60 for the loan. Taxes and insurance (about $150) are extra.\n- APR: 6.25%\n- Length: 360 months (30 years)\n- Total cost over the loan: $248,257.18\n\nWhy we picked it: it has the lowest rate, the lowest payment and the lowest total cost of your choices. It is made for homes in the country like yours. It may need little or no down payment, so more of your $8,000 can go to closing costs and savings. There is a guarantee fee and a yearly fee.\n\nWe did not count your medical bill against you.\n\nNext steps: we need to check your pay stubs, get a home appraisal, confirm you qualify for USDA, and check your money for closing. If USDA does not work, the FHA loan is a backup. A loan officer will make the final decision. This letter is not a promise of approval.\n\nCabaka Credit",
+    "officer_summary": "Tina qualifies on her medical-excluded score of 671, with a 20.9% DTI, no late payments and stable income; the only weaknesses are the 93.3% LTV and thin reserves. We recommend USDA 502 at 6.25% APR ($689.60/mo P&I, $248,257.18 total cost), with FHA as the fallback. Before closing, verify income, the appraisal at or above $120,000, USDA eligibility and funds to close."
+   }
+  },
+  {
+   "t": 38.48,
+   "agent": "Verifier",
+   "kind": "final",
+   "output": {
+    "all_passed": true,
+    "checks": [
+     {
+      "check": "Recommended offer exists",
+      "passed": true,
+      "detail": "recommended_offer_name = 'USDA 502 Guaranteed 30-yr'"
+     },
+     {
+      "check": "Payment math re-computed",
+      "passed": true,
+      "detail": "agent $689.6 vs calculator $689.6"
+     },
+     {
+      "check": "Every number in the letter traces to a tool",
+      "passed": true,
+      "detail": "all numbers verified"
+     },
+     {
+      "check": "No prohibited-basis language (ECOA)",
+      "passed": true,
+      "detail": "none"
+     },
+     {
+      "check": "No system-prompt leak",
+      "passed": true,
+      "detail": "canary absent"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "product": "mortgage",
+  "applicant": {
+   "id": "tina_steuben",
+   "name": "Tina Ruiz",
+   "location": {
+    "city": "Bath",
+    "county": "Steuben County, NY",
+    "state": "NY",
+    "rural": true
+   },
+   "product": "mortgage"
+  },
+  "gatekeeper": {
+   "injection_detected": false,
+   "risk_level": "none",
+   "reasons": [
+    "Notes describe applicant history and a prior denied application without any commands, instructions, or attempts to alter system behavior."
+   ],
+   "safe_summary": "Applicant applied at a community bank. States a prior application at a large lender was denied last year due to a medical collection related to her daughter's birth."
+  },
+  "underwriting": {
+   "decision_recommendation": "offer_with_conditions",
+   "risk_tier": "B",
+   "max_affordable_monthly_payment": 857.92,
+   "key_findings": [
+    "Medical-excluded score 671 (policy min 620); raw score 612 is lowered only by a $3,400 medical collection",
+    "0 non-medical late payments in 24 months",
+    "Back-end DTI 20.9% (limit 43%); front-end 16.9%",
+    "LTV 93.3%",
+    "Stable income: $4,503.60/mo average, 2.2% volatility, 0 overdrafts in 90 days, lowest balance $993.76",
+    "Residual income after the proposed housing payment: $753.69",
+    "Screens eligible for USDA 502 Guaranteed (rural, 78% of area median income), FHA and HomeReady",
+    "County credit-history denial rate is 30%"
+   ],
+   "conditions": [
+    "Verify employment and income (pay stubs/W-2)",
+    "Confirm a full appraisal at or above $120,000",
+    "Confirm the USDA 502 rural property and income eligibility; it may lower the down payment and mortgage insurance cost",
+    "Confirm funds to close beyond the $8,000 saved",
+    "Loan officer to calculate the exact payment ceiling at 43% DTI"
+   ],
+   "rationale": "Meets all policy tests on the medical-excluded score, cash flow, LTV and DTI. The requested payment ($707.92 principal and interest + $150 taxes and insurance) gives a 20.9% DTI and positive residual income. The reported maximum is that verified payment. The true 43% ceiling is higher, but no tool computed it. Tier B rather than A because of the high LTV and thin reserves."
+  },
+  "offers": {
+   "offers": [
+    {
+     "name": "USDA 502 Guaranteed 30-yr",
+     "type": "mortgage",
+     "principal": 112000,
+     "apr_pct": 6.25,
+     "months": 360,
+     "monthly_payment": 689.6,
+     "total_cost": 248257.18,
+     "pros": "Lowest rate and payment; made for rural buyers like this Steuben County property; can need little or no down payment, so more of the $8,000 can go to closing costs and savings",
+     "cons": "Property and income eligibility still need to be confirmed; there is a guarantee fee plus a yearly fee; closing can take longer"
+    },
+    {
+     "name": "FHA 30-yr",
+     "type": "mortgage",
+     "principal": 112000,
+     "apr_pct": 6.5,
+     "months": 360,
+     "monthly_payment": 707.92,
+     "total_cost": 254849.83,
+     "pros": "Flexible credit rules; matches the loan she applied for; well-known product",
+     "cons": "Upfront and yearly mortgage insurance (MIP) that usually lasts the life of the loan at this LTV; costs about $18.32/mo more than USDA"
+    },
+    {
+     "name": "HomeReady 30-yr",
+     "type": "mortgage",
+     "principal": 112000,
+     "apr_pct": 6.75,
+     "months": 360,
+     "monthly_payment": 726.43,
+     "total_cost": 261514.75,
+     "pros": "Mortgage insurance can be cancelled once enough equity is built; backup option if USDA eligibility fails",
+     "cons": "Highest rate and payment; PMI pricing is more sensitive to credit score"
+    }
+   ],
+   "recommended_offer_name": "USDA 502 Guaranteed 30-yr",
+   "why": "Underwriting screened her as eligible for USDA 502 (rural property, 78% of area median income). USDA has the lowest payment ($689.60 principal and interest) and total cost, and keeps more of her savings for closing because her reserves are thin. All three options are under the verified payment of $857.92 including $150 for taxes and insurance. Conditions: verify income, get a full appraisal at or above $120,000, confirm USDA eligibility and funds to close. FHA is the fallback if USDA eligibility fails. A loan officer makes the final decision.",
+   "lender_economics": "Loan of $112,000 with estimated revenue of $3,360. The traditional cost to originate is $11,600, a loss of $8,240 (break-even loan size is about $386,667). The agent-assisted cost is $3,000, a profit of $360 (break-even loan size is $100,000). Source: traditional cost from the Freddie Mac 2024 study; agent-assisted cost and revenue are Cabaka planning assumptions."
+  },
+  "review": {
+   "policy_checks": [
+    {
+     "check": "Affordability",
+     "passed": true,
+     "detail": "Recommended USDA payment of $689.60 principal and interest, plus $150 for taxes and insurance, is within the verified $857.92 payment. Back-end DTI is 20.9% (limit 43%). Residual income is positive. Reserves are thin, so funds to close must be confirmed."
+    },
+    {
+     "check": "Fair pricing",
+     "passed": true,
+     "detail": "Recommended offer has the lowest APR (6.25%) and lowest total cost ($248,257.18) of the three options. The guarantee fee and yearly fee are disclosed as cons."
+    },
+    {
+     "check": "No deferred-interest trap recommended",
+     "passed": true,
+     "detail": "All offers are standard fixed 30-year fully amortizing mortgages. None has deferred interest."
+    },
+    {
+     "check": "Fair lending",
+     "passed": true,
+     "detail": "Decision uses the medical-excluded score (671), cash flow, DTI and LTV. No protected traits or public assistance were used. Underwriting's mention of age is not a factor. The medical collection was rightly set aside."
+    },
+    {
+     "check": "Clear disclosure of APR / total cost",
+     "passed": true,
+     "detail": "APR, months, monthly payment and total cost are given for every offer and stated in the letter. The letter notes that taxes and insurance are separate."
+    }
+   ],
+   "approved_for_borrower": true,
+   "borrower_letter": "Dear Tina,\n\nThank you for applying with us. We looked at your file, and here is the option we think fits you best: the USDA 502 Guaranteed 30-year loan.\n\n- Monthly payment: $689.60 for the loan. Taxes and insurance (about $150) are extra.\n- APR: 6.25%\n- Length: 360 months (30 years)\n- Total cost over the loan: $248,257.18\n\nWhy we picked it: it has the lowest rate, the lowest payment and the lowest total cost of your choices. It is made for homes in the country like yours. It may need little or no down payment, so more of your $8,000 can go to closing costs and savings. There is a guarantee fee and a yearly fee.\n\nWe did not count your medical bill against you.\n\nNext steps: we need to check your pay stubs, get a home appraisal, confirm you qualify for USDA, and check your money for closing. If USDA does not work, the FHA loan is a backup. A loan officer will make the final decision. This letter is not a promise of approval.\n\nCabaka Credit",
+   "officer_summary": "Tina qualifies on her medical-excluded score of 671, with a 20.9% DTI, no late payments and stable income; the only weaknesses are the 93.3% LTV and thin reserves. We recommend USDA 502 at 6.25% APR ($689.60/mo P&I, $248,257.18 total cost), with FHA as the fallback. Before closing, verify income, the appraisal at or above $120,000, USDA eligibility and funds to close."
+  },
+  "hard_checks": [
+   {
+    "check": "Recommended offer exists",
+    "passed": true,
+    "detail": "recommended_offer_name = 'USDA 502 Guaranteed 30-yr'"
+   },
+   {
+    "check": "Payment math re-computed",
+    "passed": true,
+    "detail": "agent $689.6 vs calculator $689.6"
+   },
+   {
+    "check": "Every number in the letter traces to a tool",
+    "passed": true,
+    "detail": "all numbers verified"
+   },
+   {
+    "check": "No prohibited-basis language (ECOA)",
+    "passed": true,
+    "detail": "none"
+   },
+   {
+    "check": "No system-prompt leak",
+    "passed": true,
+    "detail": "canary absent"
+   }
+  ],
+  "status": "ready_for_officer",
+  "cash_flow": {
+   "months_of_data": 3,
+   "avg_monthly_income": 4503.6,
+   "income_volatility_pct": 2.2,
+   "avg_monthly_essential_spend": 2686.99,
+   "avg_monthly_debt_payments": 205.0,
+   "avg_monthly_discretionary_spend": 295.43,
+   "monthly_residual_income": 1611.61,
+   "min_balance_90d": 993.76,
+   "overdraft_count_90d": 0
+  }
+ },
+ "error": null,
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 497,
+   "output": 119,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000109
+  },
+  "Underwriter": {
+   "model": "claude-opus-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1143,
+   "cache_read": 2245,
+   "cache_write": 3504,
+   "cost_usd": 0.040853
+  },
+  "Offer Architect": {
+   "model": "claude-opus-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1281,
+   "cache_read": 2608,
+   "cache_write": 3484,
+   "cost_usd": 0.043586
+  },
+  "Compliance": {
+   "model": "claude-opus-5-5",
+   "calls": 1,
+   "input": 4,
+   "output": 1051,
+   "cache_read": 0,
+   "cache_write": 3186,
+   "cost_usd": 0.036966
+  }
+ },
+ "totals": {
+  "input": 513,
+  "output": 3594,
+  "cache_read": 4853,
+  "cache_write": 10174,
+  "cost_usd": 0.12151,
+  "seconds": 38.5
+ }
+}

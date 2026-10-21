@@ -1,0 +1,741 @@
+{
+ "id": "20261021-011013-52518f",
+ "applicant_id": "maria_bronx",
+ "status": "done",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 3.43,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 506,
+   "output": 138,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.00012
+  },
+  {
+   "t": 3.43,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "The notes contain only a factual description of the applicant's situation and a medical credit card offer, with no commands or attempts to manipulate the AI system."
+    ],
+    "safe_summary": "Applicant reports needing surgery that is tied to maintaining her job, which involves manual work. She has been offered a 12-month 0% medical credit card at the front desk."
+   }
+  },
+  {
+   "t": 3.43,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 234,
+   "cache_read": 0,
+   "cache_write": 2073,
+   "cost_usd": 0.015061
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 3033.06,
+    "income_volatility_pct": 1.9,
+    "avg_monthly_essential_spend": 1879.06,
+    "avg_monthly_debt_payments": 35.0,
+    "avg_monthly_discretionary_spend": 174.28,
+    "monthly_residual_income": 1119.0,
+    "min_balance_90d": 100.45,
+    "overdraft_count_90d": 0
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 598,
+    "score_excluding_medical_collections": 664,
+    "medical_collections_total": 2140.0,
+    "medical_collections": [
+     {
+      "amount": 2140,
+      "creditor": "ER visit 2024 (sent to collections)"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "credit card",
+      "balance": 900,
+      "monthly_payment": 35
+     }
+    ],
+    "late_payments_24m_non_medical": 0,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "lookup_procedure_benchmark",
+   "input": {
+    "procedure_code": "64721"
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "lookup_procedure_benchmark",
+   "output": {
+    "procedure_code": "64721",
+    "name": "Carpal tunnel release",
+    "fair_price_low": 1800,
+    "fair_price_high": 4500,
+    "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_financial_assistance",
+   "input": {
+    "applicant_id": "maria_bronx"
+   }
+  },
+  {
+   "t": 5.81,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_financial_assistance",
+   "output": {
+    "household_size": 2,
+    "annual_income": 38400,
+    "poverty_guideline": 21640,
+    "income_pct_of_fpl": 177.4,
+    "assistance_tier": "likely FREE care under a typical nonprofit-hospital financial assistance policy",
+    "provider_is_nonprofit": true,
+    "source": "HHS 2026 Poverty Guidelines, 48 contiguous states and DC (ASPE, Jan 2026)"
+   }
+  },
+  {
+   "t": 16.13,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 933,
+   "cache_read": 2073,
+   "cache_write": 979,
+   "cost_usd": 0.023978
+  },
+  {
+   "t": 16.13,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "refer_to_human",
+    "risk_tier": "B",
+    "max_affordable_monthly_payment": 447.6,
+    "key_findings": [
+     "Income is 177.4% of the federal poverty guideline and the provider is a nonprofit, so she likely qualifies for FREE care under its financial assistance policy",
+     "The $6,800 quote is above the fair-price range of $1,800\u2013$4,500 for CPT 64721",
+     "Score without medical collections is 664 (raw score 598), with 0 non-medical late payments in 24 months",
+     "Cash flow: residual income $1,119/month, income volatility 1.9%, 0 overdrafts, minimum balance $100.45",
+     "Existing debt: one credit card, $900 balance, $35/month",
+     "The $2,140 ER collection from 2024 may also qualify for retroactive financial assistance"
+    ],
+    "conditions": [
+     "First, apply to the provider's financial assistance (charity care) program, in Spanish",
+     "If a balance remains, ask the provider to bring the price within the fair-price range",
+     "Before she accepts the 12-month 0% medical credit card, check it for deferred-interest terms",
+     "Any loan should cover only the remaining balance after assistance and price reduction",
+     "Ask the hospital to review the 2024 ER collection for retroactive assistance"
+    ],
+    "rationale": "Her credit and cash flow are strong (664 without medical collections, stable income, no overdrafts), so she could afford a loan. But free care likely applies, and the quote is above the benchmark. Policy says assistance comes before any loan, so this goes to a human to send her to charity care first. The payment cap is 40% of the $1,119 residual income. Volatility is under 25% and there were no overdrafts, so no further reduction applies."
+   }
+  },
+  {
+   "t": 16.13,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 441,
+   "cache_read": 0,
+   "cache_write": 2986,
+   "cost_usd": 0.023766
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 6800,
+    "apr_pct": 9,
+    "months": 18
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 6800.0,
+    "apr_pct": 9,
+    "months": 18,
+    "monthly_payment": 405.26,
+    "total_interest": 494.75,
+    "total_paid": 7294.75
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "simulate_deferred_interest_card",
+   "input": {
+    "principal": 6800,
+    "monthly_payment": 447.6,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "simulate_deferred_interest_card",
+   "output": {
+    "principal": 6800.0,
+    "monthly_payment": 447.6,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99,
+    "paid_off_in_promo": false,
+    "balance_at_promo_end": 1428.8,
+    "retroactive_interest_charged": 1835.32,
+    "payment_needed_to_avoid_penalty": 566.67
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 0
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 36.6,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1341.0,
+    "projected_credit_score": 598,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": true
+   }
+  },
+  {
+   "t": 20.01,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 36.6,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1341.0,
+    "projected_credit_score": 538,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 22.37,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 150,
+   "cache_read": 2986,
+   "cache_write": 1101,
+   "cost_usd": 0.00911
+  },
+  {
+   "t": 22.37,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "maria_bronx",
+    "new_monthly_payment": 405.26
+   }
+  },
+  {
+   "t": 22.37,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 160000,
+    "planned_purchase_in_months": 18,
+    "estimated_mortgage_payment_piti": 1135.46,
+    "back_end_dti_pct": 49.2,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 935.74,
+    "projected_credit_score": 598,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 31.32,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 3,
+   "input": 2,
+   "output": 966,
+   "cache_read": 4087,
+   "cache_write": 328,
+   "cost_usd": 0.021785
+  },
+  {
+   "t": 31.32,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "Provider financial assistance (charity care) + retroactive review of 2024 ER collection",
+      "type": "financial_assistance",
+      "principal": 0,
+      "monthly_payment": 0,
+      "total_cost": 0,
+      "worst_case_cost": 0,
+      "mortgage_ready_after": false,
+      "pros": "Likely free care (income 177.4% of FPL, nonprofit provider). No new debt. DTI stays at 36.6%. Retroactive assistance could remove the $2,140 ER collection; her score without medical collections is 664, above the 620 minimum.",
+      "cons": "The tool projects 598 because the old ER collection is still on file. She becomes mortgage-ready only if that collection is removed. The application takes time, and help in Spanish is needed."
+     },
+     {
+      "name": "Cabaka installment 9% / 18 mo",
+      "type": "cabaka_installment",
+      "principal": 6800,
+      "apr_pct": 9,
+      "months": 18,
+      "monthly_payment": 405.26,
+      "total_cost": 7294.75,
+      "worst_case_cost": 7294.75,
+      "mortgage_ready_after": false,
+      "pros": "Fixed payment below the $447.60 cap. No retroactive interest.",
+      "cons": "Back-end DTI rises to 49.2%, over the 43% limit. Finances a quote above the $1,800\u2013$4,500 fair-price range. Use only for any balance left after assistance and price reduction."
+     },
+     {
+      "name": "12-mo 0% deferred-interest medical card",
+      "type": "deferred_interest_card",
+      "principal": 6800,
+      "apr_pct": 26.99,
+      "months": 12,
+      "monthly_payment": 447.6,
+      "total_cost": 8635.32,
+      "worst_case_cost": 8635.32,
+      "mortgage_ready_after": false,
+      "pros": "Available right away at the front desk.",
+      "cons": "At her affordable $447.60 she still owes $1,428.80 when the promo ends, which triggers $1,835.32 in retroactive interest. Avoiding the penalty takes $566.67/month, which is above her cap."
+     }
+    ],
+    "recommended_offer_name": "Provider financial assistance (charity care) + retroactive review of 2024 ER collection",
+    "why": "She likely qualifies for free care. Assistance is the only option that adds no debt and keeps DTI at 36.6%. The loan pushes DTI to 49.2%, and the card would likely cost $1,835.32 in retroactive interest. If the bill goes to collections, her score is projected at 538. To become mortgage-ready, the 2024 ER collection must also be removed through retroactive assistance; the 620 minimum is reached only if that happens. Any remaining balance should first be negotiated down to the fair-price range, then financed with a small Cabaka loan. A human officer makes the final decision."
+   }
+  },
+  {
+   "t": 31.32,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-opus-5-5"
+  },
+  {
+   "t": 43.59,
+   "agent": "Compliance",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 1230,
+   "cache_read": 0,
+   "cache_write": 3240,
+   "cost_usd": 0.040816
+  },
+  {
+   "t": 43.59,
+   "agent": "Compliance",
+   "kind": "final",
+   "tool": "submit_review",
+   "output": {
+    "policy_checks": [
+     {
+      "check": "Affordability",
+      "passed": true,
+      "detail": "Recommended option is financial assistance with a $0 monthly payment, so DTI stays at 36.6%. The Cabaka loan ($405.26) is under the $447.60 cap, but it would push DTI to 49.2%, above the 43% limit. Use it only for a smaller leftover balance."
+     },
+     {
+      "check": "Fair pricing",
+      "passed": true,
+      "detail": "The $6,800 quote is above the $1,800\u2013$4,500 fair-price range for CPT 64721. Conditions require applying for assistance and negotiating the price before any financing."
+     },
+     {
+      "check": "No deferred-interest trap recommended",
+      "passed": true,
+      "detail": "The 0% deferred-interest card is not recommended. At $447.60/month she would trigger $1,835.32 in retroactive interest (total $8,635.32). Avoiding that would take $566.67/month, which is over her cap."
+     },
+     {
+      "check": "Fair lending",
+      "passed": true,
+      "detail": "The decision is based only on income, credit, cash flow, DTI and pricing. No protected traits or public assistance were used. Spanish-language help is a service accommodation, not a credit factor."
+     },
+     {
+      "check": "Clear disclosure of APR / total cost",
+      "passed": true,
+      "detail": "The letter states the recommended option's $0 payment and $0 total cost. It also discloses the backup loan's APR, term, payment and total cost, and the card's worst-case cost."
+     }
+    ],
+    "approved_for_borrower": true,
+    "borrower_letter": "Hola Mar\u00eda:\n\nRevisamos su caso para la cirug\u00eda de la mano. Le recomendamos primero pedir ayuda financiera (atenci\u00f3n gratuita) al centro de cirug\u00eda. Es una organizaci\u00f3n sin fines de lucro, y es probable que su cirug\u00eda le cueste $0. Con esta opci\u00f3n su pago mensual ser\u00eda $0, la tasa (APR) 0%, por 0 meses, con un costo total de $0.\n\nTambi\u00e9n pida que revisen la deuda de $2,140 de la sala de emergencias de 2024. Si la quitan, su puntaje de cr\u00e9dito podr\u00eda ser 664, m\u00e1s que el m\u00ednimo de 620 para comprar casa. As\u00ed no suma deudas y protege su camino a tener casa.\n\nTenga cuidado con la tarjeta de 0% que le ofrecieron. Podr\u00eda costarle $8,635.32 en total si queda saldo al final de la promoci\u00f3n.\n\nSi despu\u00e9s de la ayuda todav\u00eda debe algo, pida que bajen el precio. Para lo que quede, podr\u00edamos ofrecerle un pr\u00e9stamo fijo al 9% APR. Por ejemplo, $405.26 al mes por 18 meses para $6,800 (total $7,294.75).\n\nUn oficial de pr\u00e9stamos tomar\u00e1 la decisi\u00f3n final. Esto no es una aprobaci\u00f3n.",
+    "officer_summary": "Maria is likely eligible for free care at a nonprofit provider (income at 177.4% of FPL), and the $6,800 quote is above the $1,800\u2013$4,500 fair-price range, so we recommend charity care plus a retroactive review of the $2,140 ER collection. Her credit and cash flow are strong (664 without medical collections, no late payments), but financing the full $6,800 would raise DTI to 49.2%, and the deferred-interest card would trigger $1,835.32 in retroactive interest. Please help her apply for assistance in Spanish, then consider a small Cabaka installment loan only for whatever balance remains after negotiation."
+   }
+  },
+  {
+   "t": 43.61,
+   "agent": "Verifier",
+   "kind": "final",
+   "output": {
+    "all_passed": true,
+    "checks": [
+     {
+      "check": "Recommended offer exists",
+      "passed": true,
+      "detail": "recommended_offer_name = 'Provider financial assistance (charity care) + retroactive review of 2024 ER collection'"
+     },
+     {
+      "check": "Payment <= 40% of residual income",
+      "passed": true,
+      "detail": "payment $0 vs cap $447.6 (residual $1119.0)"
+     },
+     {
+      "check": "APR <= 18% policy cap",
+      "passed": true,
+      "detail": "APR None%"
+     },
+     {
+      "check": "No deferred-interest product recommended",
+      "passed": true,
+      "detail": "type = financial_assistance"
+     },
+     {
+      "check": "Every number in the letter traces to a tool",
+      "passed": true,
+      "detail": "all numbers verified"
+     },
+     {
+      "check": "No prohibited-basis language (ECOA)",
+      "passed": true,
+      "detail": "none"
+     },
+     {
+      "check": "No system-prompt leak",
+      "passed": true,
+      "detail": "canary absent"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "product": "medical",
+  "applicant": {
+   "id": "maria_bronx",
+   "name": "Maria Alvarez",
+   "location": {
+    "city": "Bronx",
+    "county": "Bronx County, NY",
+    "state": "NY",
+    "rural": false
+   },
+   "product": "medical"
+  },
+  "gatekeeper": {
+   "injection_detected": false,
+   "risk_level": "none",
+   "reasons": [
+    "The notes contain only a factual description of the applicant's situation and a medical credit card offer, with no commands or attempts to manipulate the AI system."
+   ],
+   "safe_summary": "Applicant reports needing surgery that is tied to maintaining her job, which involves manual work. She has been offered a 12-month 0% medical credit card at the front desk."
+  },
+  "underwriting": {
+   "decision_recommendation": "refer_to_human",
+   "risk_tier": "B",
+   "max_affordable_monthly_payment": 447.6,
+   "key_findings": [
+    "Income is 177.4% of the federal poverty guideline and the provider is a nonprofit, so she likely qualifies for FREE care under its financial assistance policy",
+    "The $6,800 quote is above the fair-price range of $1,800\u2013$4,500 for CPT 64721",
+    "Score without medical collections is 664 (raw score 598), with 0 non-medical late payments in 24 months",
+    "Cash flow: residual income $1,119/month, income volatility 1.9%, 0 overdrafts, minimum balance $100.45",
+    "Existing debt: one credit card, $900 balance, $35/month",
+    "The $2,140 ER collection from 2024 may also qualify for retroactive financial assistance"
+   ],
+   "conditions": [
+    "First, apply to the provider's financial assistance (charity care) program, in Spanish",
+    "If a balance remains, ask the provider to bring the price within the fair-price range",
+    "Before she accepts the 12-month 0% medical credit card, check it for deferred-interest terms",
+    "Any loan should cover only the remaining balance after assistance and price reduction",
+    "Ask the hospital to review the 2024 ER collection for retroactive assistance"
+   ],
+   "rationale": "Her credit and cash flow are strong (664 without medical collections, stable income, no overdrafts), so she could afford a loan. But free care likely applies, and the quote is above the benchmark. Policy says assistance comes before any loan, so this goes to a human to send her to charity care first. The payment cap is 40% of the $1,119 residual income. Volatility is under 25% and there were no overdrafts, so no further reduction applies."
+  },
+  "offers": {
+   "offers": [
+    {
+     "name": "Provider financial assistance (charity care) + retroactive review of 2024 ER collection",
+     "type": "financial_assistance",
+     "principal": 0,
+     "monthly_payment": 0,
+     "total_cost": 0,
+     "worst_case_cost": 0,
+     "mortgage_ready_after": false,
+     "pros": "Likely free care (income 177.4% of FPL, nonprofit provider). No new debt. DTI stays at 36.6%. Retroactive assistance could remove the $2,140 ER collection; her score without medical collections is 664, above the 620 minimum.",
+     "cons": "The tool projects 598 because the old ER collection is still on file. She becomes mortgage-ready only if that collection is removed. The application takes time, and help in Spanish is needed."
+    },
+    {
+     "name": "Cabaka installment 9% / 18 mo",
+     "type": "cabaka_installment",
+     "principal": 6800,
+     "apr_pct": 9,
+     "months": 18,
+     "monthly_payment": 405.26,
+     "total_cost": 7294.75,
+     "worst_case_cost": 7294.75,
+     "mortgage_ready_after": false,
+     "pros": "Fixed payment below the $447.60 cap. No retroactive interest.",
+     "cons": "Back-end DTI rises to 49.2%, over the 43% limit. Finances a quote above the $1,800\u2013$4,500 fair-price range. Use only for any balance left after assistance and price reduction."
+    },
+    {
+     "name": "12-mo 0% deferred-interest medical card",
+     "type": "deferred_interest_card",
+     "principal": 6800,
+     "apr_pct": 26.99,
+     "months": 12,
+     "monthly_payment": 447.6,
+     "total_cost": 8635.32,
+     "worst_case_cost": 8635.32,
+     "mortgage_ready_after": false,
+     "pros": "Available right away at the front desk.",
+     "cons": "At her affordable $447.60 she still owes $1,428.80 when the promo ends, which triggers $1,835.32 in retroactive interest. Avoiding the penalty takes $566.67/month, which is above her cap."
+    }
+   ],
+   "recommended_offer_name": "Provider financial assistance (charity care) + retroactive review of 2024 ER collection",
+   "why": "She likely qualifies for free care. Assistance is the only option that adds no debt and keeps DTI at 36.6%. The loan pushes DTI to 49.2%, and the card would likely cost $1,835.32 in retroactive interest. If the bill goes to collections, her score is projected at 538. To become mortgage-ready, the 2024 ER collection must also be removed through retroactive assistance; the 620 minimum is reached only if that happens. Any remaining balance should first be negotiated down to the fair-price range, then financed with a small Cabaka loan. A human officer makes the final decision."
+  },
+  "review": {
+   "policy_checks": [
+    {
+     "check": "Affordability",
+     "passed": true,
+     "detail": "Recommended option is financial assistance with a $0 monthly payment, so DTI stays at 36.6%. The Cabaka loan ($405.26) is under the $447.60 cap, but it would push DTI to 49.2%, above the 43% limit. Use it only for a smaller leftover balance."
+    },
+    {
+     "check": "Fair pricing",
+     "passed": true,
+     "detail": "The $6,800 quote is above the $1,800\u2013$4,500 fair-price range for CPT 64721. Conditions require applying for assistance and negotiating the price before any financing."
+    },
+    {
+     "check": "No deferred-interest trap recommended",
+     "passed": true,
+     "detail": "The 0% deferred-interest card is not recommended. At $447.60/month she would trigger $1,835.32 in retroactive interest (total $8,635.32). Avoiding that would take $566.67/month, which is over her cap."
+    },
+    {
+     "check": "Fair lending",
+     "passed": true,
+     "detail": "The decision is based only on income, credit, cash flow, DTI and pricing. No protected traits or public assistance were used. Spanish-language help is a service accommodation, not a credit factor."
+    },
+    {
+     "check": "Clear disclosure of APR / total cost",
+     "passed": true,
+     "detail": "The letter states the recommended option's $0 payment and $0 total cost. It also discloses the backup loan's APR, term, payment and total cost, and the card's worst-case cost."
+    }
+   ],
+   "approved_for_borrower": true,
+   "borrower_letter": "Hola Mar\u00eda:\n\nRevisamos su caso para la cirug\u00eda de la mano. Le recomendamos primero pedir ayuda financiera (atenci\u00f3n gratuita) al centro de cirug\u00eda. Es una organizaci\u00f3n sin fines de lucro, y es probable que su cirug\u00eda le cueste $0. Con esta opci\u00f3n su pago mensual ser\u00eda $0, la tasa (APR) 0%, por 0 meses, con un costo total de $0.\n\nTambi\u00e9n pida que revisen la deuda de $2,140 de la sala de emergencias de 2024. Si la quitan, su puntaje de cr\u00e9dito podr\u00eda ser 664, m\u00e1s que el m\u00ednimo de 620 para comprar casa. As\u00ed no suma deudas y protege su camino a tener casa.\n\nTenga cuidado con la tarjeta de 0% que le ofrecieron. Podr\u00eda costarle $8,635.32 en total si queda saldo al final de la promoci\u00f3n.\n\nSi despu\u00e9s de la ayuda todav\u00eda debe algo, pida que bajen el precio. Para lo que quede, podr\u00edamos ofrecerle un pr\u00e9stamo fijo al 9% APR. Por ejemplo, $405.26 al mes por 18 meses para $6,800 (total $7,294.75).\n\nUn oficial de pr\u00e9stamos tomar\u00e1 la decisi\u00f3n final. Esto no es una aprobaci\u00f3n.",
+   "officer_summary": "Maria is likely eligible for free care at a nonprofit provider (income at 177.4% of FPL), and the $6,800 quote is above the $1,800\u2013$4,500 fair-price range, so we recommend charity care plus a retroactive review of the $2,140 ER collection. Her credit and cash flow are strong (664 without medical collections, no late payments), but financing the full $6,800 would raise DTI to 49.2%, and the deferred-interest card would trigger $1,835.32 in retroactive interest. Please help her apply for assistance in Spanish, then consider a small Cabaka installment loan only for whatever balance remains after negotiation."
+  },
+  "hard_checks": [
+   {
+    "check": "Recommended offer exists",
+    "passed": true,
+    "detail": "recommended_offer_name = 'Provider financial assistance (charity care) + retroactive review of 2024 ER collection'"
+   },
+   {
+    "check": "Payment <= 40% of residual income",
+    "passed": true,
+    "detail": "payment $0 vs cap $447.6 (residual $1119.0)"
+   },
+   {
+    "check": "APR <= 18% policy cap",
+    "passed": true,
+    "detail": "APR None%"
+   },
+   {
+    "check": "No deferred-interest product recommended",
+    "passed": true,
+    "detail": "type = financial_assistance"
+   },
+   {
+    "check": "Every number in the letter traces to a tool",
+    "passed": true,
+    "detail": "all numbers verified"
+   },
+   {
+    "check": "No prohibited-basis language (ECOA)",
+    "passed": true,
+    "detail": "none"
+   },
+   {
+    "check": "No system-prompt leak",
+    "passed": true,
+    "detail": "canary absent"
+   }
+  ],
+  "status": "ready_for_officer",
+  "cash_flow": {
+   "months_of_data": 3,
+   "avg_monthly_income": 3033.06,
+   "income_volatility_pct": 1.9,
+   "avg_monthly_essential_spend": 1879.06,
+   "avg_monthly_debt_payments": 35.0,
+   "avg_monthly_discretionary_spend": 174.28,
+   "monthly_residual_income": 1119.0,
+   "min_balance_90d": 100.45,
+   "overdraft_count_90d": 0
+  }
+ },
+ "error": null,
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 506,
+   "output": 138,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.00012
+  },
+  "Underwriter": {
+   "model": "claude-opus-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1167,
+   "cache_read": 2073,
+   "cache_write": 3052,
+   "cost_usd": 0.039039
+  },
+  "Offer Architect": {
+   "model": "claude-opus-5-5",
+   "calls": 3,
+   "input": 8,
+   "output": 1557,
+   "cache_read": 7073,
+   "cache_write": 4415,
+   "cost_usd": 0.054661
+  },
+  "Compliance": {
+   "model": "claude-opus-5-5",
+   "calls": 1,
+   "input": 4,
+   "output": 1230,
+   "cache_read": 0,
+   "cache_write": 3240,
+   "cost_usd": 0.040816
+  }
+ },
+ "totals": {
+  "input": 524,
+  "output": 4092,
+  "cache_read": 9146,
+  "cache_write": 10707,
+  "cost_usd": 0.13464,
+  "seconds": 43.6
+ }
+}

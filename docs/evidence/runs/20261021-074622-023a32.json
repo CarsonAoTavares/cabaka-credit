@@ -1,0 +1,756 @@
+{
+ "id": "20261021-074622-023a32",
+ "applicant_id": "kwame_staten",
+ "status": "done",
+ "events": [
+  {
+   "t": 0.0,
+   "agent": "Gatekeeper",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 1.45,
+   "agent": "Gatekeeper",
+   "kind": "usage",
+   "turn": 1,
+   "input": 480,
+   "output": 141,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000118
+  },
+  {
+   "t": 1.45,
+   "agent": "Gatekeeper",
+   "kind": "final",
+   "tool": "screen",
+   "output": {
+    "injection_detected": false,
+    "risk_level": "none",
+    "reasons": [
+     "Notes contain no instructions directed at an AI system, no attempts to override rules, approve the loan, change rates, or reveal data.",
+     "Content describes variable income and a medical need related to an implant following an infection, which is ordinary applicant context."
+    ],
+    "safe_summary": "Applicant reports that weekly income varies and states a need for an implant following an infection."
+   }
+  },
+  {
+   "t": 1.45,
+   "agent": "Underwriter",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 3.16,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 273,
+   "cache_read": 1462,
+   "cache_write": 606,
+   "cost_usd": 0.000227
+  },
+  {
+   "t": 3.16,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "check_financial_assistance",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 3.16,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "check_financial_assistance",
+   "output": {
+    "household_size": 4,
+    "annual_income": 52000,
+    "poverty_guideline": 33000,
+    "income_pct_of_fpl": 157.6,
+    "assistance_tier": "likely FREE care under a typical nonprofit-hospital financial assistance policy",
+    "provider_is_nonprofit": false,
+    "source": "HHS 2026 Poverty Guidelines, 48 contiguous states and DC (ASPE, Jan 2026)"
+   }
+  },
+  {
+   "t": 3.16,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "analyze_cash_flow",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 3.17,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "analyze_cash_flow",
+   "output": {
+    "months_of_data": 3,
+    "avg_monthly_income": 5341.38,
+    "income_volatility_pct": 24.0,
+    "avg_monthly_essential_spend": 3350.24,
+    "avg_monthly_debt_payments": 505.0,
+    "avg_monthly_discretionary_spend": 247.71,
+    "monthly_residual_income": 1486.14,
+    "min_balance_90d": -1328.84,
+    "overdraft_count_90d": 4
+   }
+  },
+  {
+   "t": 3.17,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "get_credit_report",
+   "input": {
+    "applicant_id": "kwame_staten"
+   }
+  },
+  {
+   "t": 3.17,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "get_credit_report",
+   "output": {
+    "score": 605,
+    "score_excluding_medical_collections": 631,
+    "medical_collections_total": 640.0,
+    "medical_collections": [
+     {
+      "amount": 640,
+      "creditor": "Urgent care 2025"
+     }
+    ],
+    "non_medical_tradelines": [
+     {
+      "type": "car lease",
+      "balance": 11200,
+      "monthly_payment": 420
+     },
+     {
+      "type": "credit card",
+      "balance": 2300,
+      "monthly_payment": 85
+     }
+    ],
+    "late_payments_24m_non_medical": 2,
+    "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy underwrites on the medical-excluded score plus cash flow."
+   }
+  },
+  {
+   "t": 3.17,
+   "agent": "Underwriter",
+   "kind": "tool_call",
+   "tool": "lookup_procedure_benchmark",
+   "input": {
+    "procedure_code": "D6010"
+   }
+  },
+  {
+   "t": 3.17,
+   "agent": "Underwriter",
+   "kind": "tool_result",
+   "tool": "lookup_procedure_benchmark",
+   "output": {
+    "procedure_code": "D6010",
+    "name": "Dental implant, single tooth",
+    "fair_price_low": 3000,
+    "fair_price_high": 5000,
+    "source": "Demo benchmark range (illustrative; replace with ADA fee survey data)"
+   }
+  },
+  {
+   "t": 12.07,
+   "agent": "Underwriter",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 1522,
+   "cache_read": 2068,
+   "cache_write": 1035,
+   "cost_usd": 0.000911
+  },
+  {
+   "t": 12.07,
+   "agent": "Underwriter",
+   "kind": "final",
+   "tool": "submit_underwriting",
+   "output": {
+    "decision_recommendation": "refer_to_human",
+    "risk_tier": "C",
+    "max_affordable_monthly_payment": 594.46,
+    "key_findings": [
+     "Household income is 157.6% of the federal poverty guideline (4 people), which likely qualifies for free care under a typical nonprofit-hospital financial assistance policy.",
+     "The provider is a private, for-profit dental practice, so nonprofit charity-care rules may not apply. Eligibility for any discount here is unconfirmed.",
+     "Quote of $5,200 is above the $3,000-$5,000 fair-price benchmark for D6010 (benchmark source is labeled illustrative).",
+     "Medical-excluded credit score is 631 (raw 605). One $640 medical collection. 2 late non-medical payments in 24 months.",
+     "Cash flow (3 months of data): avg monthly income $5,341, volatility 24.0% (just under the 25% threshold), residual income $1,486.14/month.",
+     "4 overdrafts in 90 days, minimum balance -$1,328.84. Under policy, the affordable payment must be reduced below the standard cap.",
+     "Standard cap: 40% of residual income = $594.46/month. This is a ceiling only and should be lowered because of the overdrafts and near-threshold volatility."
+    ],
+    "conditions": [
+     "Before any loan, check whether the provider or a nonprofit hospital affiliate can provide free or discounted care, or a discount to the benchmark range.",
+     "Ask the provider to reduce the quote to the benchmark range ($3,000-$5,000) or document why it is higher.",
+     "Verify income stability with additional months of bank data, since the applicant notes say income changes week to week.",
+     "Any approved payment must stay at or below the adjusted affordability figure a loan officer sets after accounting for overdrafts. $594.46 is the upper limit, not a target."
+    ],
+    "rationale": "Charity care comes first. Household income is about 158% of FPL, so free or discounted care may be available, but this private provider may not be covered by nonprofit charity policies, so a loan may still be needed. The quote is above the fair-price benchmark. Cash flow supports a payment up to $594.46 under the 40% rule, but four overdrafts and a 24% income volatility (near the 25% threshold) require a lower payment under policy. The medical-excluded score of 631 is fair. Because the charity-care eligibility is uncertain, the quote is above benchmark, and the affordability cap needs a human adjustment, I recommend referral to a loan officer rather than an offer."
+   }
+  },
+  {
+   "t": 12.07,
+   "agent": "Offer Architect",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 15.86,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 696,
+   "cache_read": 1759,
+   "cache_write": 1480,
+   "cost_usd": 0.000551
+  },
+  {
+   "t": 15.86,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "amortize",
+   "input": {
+    "principal": 5200,
+    "apr_pct": 12,
+    "months": 24
+   }
+  },
+  {
+   "t": 15.86,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "amortize",
+   "output": {
+    "principal": 5200.0,
+    "apr_pct": 12,
+    "months": 24,
+    "monthly_payment": 244.78,
+    "total_interest": 674.77,
+    "total_paid": 5874.77
+   }
+  },
+  {
+   "t": 15.86,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "simulate_deferred_interest_card",
+   "input": {
+    "principal": 5200,
+    "monthly_payment": 400,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99
+   }
+  },
+  {
+   "t": 15.86,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "simulate_deferred_interest_card",
+   "output": {
+    "principal": 5200.0,
+    "monthly_payment": 400.0,
+    "promo_months": 12,
+    "standard_apr_pct": 26.99,
+    "paid_off_in_promo": false,
+    "balance_at_promo_end": 400.0,
+    "retroactive_interest_charged": 1403.48,
+    "payment_needed_to_avoid_penalty": 433.33
+   }
+  },
+  {
+   "t": 17.81,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 2,
+   "input": 2,
+   "output": 367,
+   "cache_read": 3239,
+   "cache_write": 943,
+   "cost_usd": 0.000334
+  },
+  {
+   "t": 17.81,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "kwame_staten",
+    "new_monthly_payment": 244.78
+   }
+  },
+  {
+   "t": 17.81,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 150000,
+    "planned_purchase_in_months": 24,
+    "estimated_mortgage_payment_piti": 1110.32,
+    "back_end_dti_pct": 42.9,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1113.55,
+    "projected_credit_score": 605,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 17.81,
+   "agent": "Offer Architect",
+   "kind": "tool_call",
+   "tool": "project_mortgage_readiness",
+   "input": {
+    "applicant_id": "kwame_staten",
+    "new_monthly_payment": 0,
+    "medical_bill_goes_to_collections": true
+   }
+  },
+  {
+   "t": 17.81,
+   "agent": "Offer Architect",
+   "kind": "tool_result",
+   "tool": "project_mortgage_readiness",
+   "output": {
+    "target_home_price": 150000,
+    "planned_purchase_in_months": 24,
+    "estimated_mortgage_payment_piti": 1110.32,
+    "back_end_dti_pct": 37.3,
+    "max_dti_pct_allowed": 43,
+    "max_affordable_housing_payment": 1358.33,
+    "projected_credit_score": 545,
+    "min_score_needed": 620,
+    "mortgage_ready": false,
+    "assumptions": "30-yr fixed at 6.5%, taxes+insurance 1.5%/yr of value"
+   }
+  },
+  {
+   "t": 24.98,
+   "agent": "Offer Architect",
+   "kind": "usage",
+   "turn": 3,
+   "input": 2,
+   "output": 1576,
+   "cache_read": 4182,
+   "cache_write": 785,
+   "cost_usd": 0.000928
+  },
+  {
+   "t": 24.98,
+   "agent": "Offer Architect",
+   "kind": "final",
+   "tool": "submit_offers",
+   "output": {
+    "offers": [
+     {
+      "name": "Cabaka installment loan, 24 mo at 12% APR",
+      "type": "cabaka_installment",
+      "monthly_payment": 244.78,
+      "total_cost": 5874.77,
+      "principal": 5200,
+      "apr_pct": 12,
+      "months": 24,
+      "worst_case_cost": 5874.77,
+      "mortgage_ready_after": false,
+      "pros": "Fixed payment of $244.78 is well under the $594.46 policy ceiling and leaves room for the overdraft and income-volatility concerns. Total interest $674.77. Predictable schedule, no deferred-interest trap.",
+      "cons": "Still a new debt that lowers the projected score to about 605 (mortgage minimum 620), so not mortgage-ready in the 24-month window. Payment is still significant given four overdrafts in 90 days. Loan officer should confirm the adjusted affordability figure, which should be below $594.46."
+     },
+     {
+      "name": "0% deferred-interest medical card, 12 mo, paid at $400/mo",
+      "type": "deferred_interest_card",
+      "monthly_payment": 400,
+      "total_cost": 6603.48,
+      "principal": 5200,
+      "apr_pct": 26.99,
+      "months": 12,
+      "worst_case_cost": 6603.48,
+      "mortgage_ready_after": false,
+      "pros": "0% promo if the full balance is paid within 12 months.",
+      "cons": "At $400/mo the balance is not cleared in the promo window (balance $400 at promo end, payment needed to avoid penalty $433.33). Retroactive interest of $1,403.48 is charged on the full original balance, so the worst-case cost is $6,603.48. Not recommended at the affordable payment level."
+     },
+     {
+      "name": "Financial assistance / hospital payment plan",
+      "type": "financial_assistance",
+      "monthly_payment": 0,
+      "total_cost": 5200,
+      "principal": 5200,
+      "apr_pct": 0,
+      "months": 0,
+      "worst_case_cost": 5200,
+      "mortgage_ready_after": false,
+      "pros": "Income is about 158% of FPL, which may qualify for discounted or free care. Could eliminate or sharply reduce the balance.",
+      "cons": "Provider is a private for-profit dental practice, so nonprofit charity-care rules may not apply. Eligibility is unconfirmed, no discount is modeled, and the $5,200 quote is above the $3,000-$5,000 benchmark. Total cost shown is the unadjusted quote as a placeholder. Requires a provider request to reduce the quote."
+     }
+    ],
+    "recommended_offer_name": "Cabaka installment loan, 24 mo at 12% APR",
+    "why": "Before any loan, the provider should be asked for a fee reduction to the benchmark range and charity eligibility should be checked. If a loan is still needed, the Cabaka installment loan is the safest of the three: fixed $244.78 payment, well under the $594.46 ceiling, and no deferred-interest penalty risk. The deferred-interest card fails at the affordable payment level and costs up to $6,603.48. Mortgage readiness: the loan keeps back-end DTI at 42.9% (under 43%), but projected score is 605 vs. 620 needed, so the applicant is not mortgage-ready. With no plan (medical bill to collections), the projected score falls to 545 and the score gap is wider, so the loan is still the better path. This is a referral: the loan officer must set the adjusted affordability figure below $594.46 given overdrafts and income volatility, and verify more months of bank data. Lender economics were not modeled.",
+    "lender_economics": "Not modeled; no origination cost or profit tool was available for this product."
+   }
+  },
+  {
+   "t": 24.98,
+   "agent": "Compliance",
+   "kind": "start",
+   "model": "claude-haiku-5-5"
+  },
+  {
+   "t": 33.18,
+   "agent": "Compliance",
+   "kind": "usage",
+   "turn": 1,
+   "input": 4,
+   "output": 1888,
+   "cache_read": 1005,
+   "cache_write": 2778,
+   "cost_usd": 0.001302
+  },
+  {
+   "t": 33.18,
+   "agent": "Compliance",
+   "kind": "final",
+   "tool": "submit_review",
+   "output": {
+    "policy_checks": [
+     {
+      "check": "Affordability",
+      "passed": false,
+      "detail": "Recommended $244.78 payment is below the $594.46 standard ceiling, but underwriting says the ceiling must be lowered for 4 overdrafts in 90 days (min balance -$1,328.84) and 24% income volatility. The officer must set an adjusted figure, so affordability is not confirmed."
+     },
+     {
+      "check": "Fair pricing",
+      "passed": false,
+      "detail": "The $5,200 quote is above the $3,000-$5,000 benchmark (labeled illustrative). The recommended loan is 12% APR, but the provider should be asked to reduce the quote before any loan."
+     },
+     {
+      "check": "No deferred-interest trap recommended",
+      "passed": true,
+      "detail": "The 0% deferred-interest card (26.99% APR, up to $6,603.48 worst case) is not recommended. The recommended installment loan is fixed-payment with no deferred interest."
+     },
+     {
+      "check": "Fair lending",
+      "passed": true,
+      "detail": "Review relies only on income, credit, cash-flow and medical data. No protected characteristics were used as a reason."
+     },
+     {
+      "check": "Clear disclosure of APR and total cost",
+      "passed": true,
+      "detail": "Recommended offer discloses 12% APR, 24 months, $244.78 monthly payment and $5,874.77 total cost. Letter repeats these figures."
+     },
+     {
+      "check": "Charity care and alternatives checked first",
+      "passed": false,
+      "detail": "Income is about 158% of FPL, which may qualify for discounted care, but the for-profit provider's eligibility is unconfirmed. This must be checked before any loan."
+     },
+     {
+      "check": "Income stability verified",
+      "passed": false,
+      "detail": "Only 3 months of bank data; applicant notes say income changes week to week. More months are required."
+     }
+    ],
+    "approved_for_borrower": false,
+    "borrower_letter": "Hi Kwame,\n\nBefore you borrow, ask the dental office to lower the $5,200 price to the fair range of $3,000 to $5,000. Also ask whether you qualify for financial help based on your income. A loan officer will review your file before any decision.\n\nIf a loan is still needed, the best option we found is the Cabaka installment loan:\n- Monthly payment: $244.78\n- APR: 12%\n- Number of months: 24\n- Total cost: $5,874.77\n\nThis plan has a fixed payment. We do not recommend the 0% card, because if the balance is not paid in time, extra interest can be added back. Steady payments and no surprise costs help protect your savings goal of buying a home. Your credit score may still need to grow before you can get a mortgage in the next two years.\n\nNo loan is approved yet.",
+    "officer_summary": "Referral recommended: the applicant's income is about 158% of FPL, so charity care and a fee reduction on the $5,200 quote (above the $3,000-$5,000 benchmark) should be checked first. If a loan is still needed, the Cabaka 24-month, 12% APR installment loan ($244.78/month, $5,874.77 total) is the safest option, but the officer must set an adjusted affordability figure below the $594.46 ceiling because of four overdrafts and 24% income volatility. Verify more months of bank data, since the applicant notes say income varies week to week."
+   }
+  },
+  {
+   "t": 33.18,
+   "agent": "Verifier",
+   "kind": "final",
+   "output": {
+    "all_passed": true,
+    "checks": [
+     {
+      "check": "Recommended offer exists",
+      "passed": true,
+      "detail": "recommended_offer_name = 'Cabaka installment loan, 24 mo at 12% APR'"
+     },
+     {
+      "check": "Payment <= 40% of residual income",
+      "passed": true,
+      "detail": "payment $244.78 vs cap $594.46 (residual $1486.14)"
+     },
+     {
+      "check": "APR <= 18% policy cap",
+      "passed": true,
+      "detail": "APR 12%"
+     },
+     {
+      "check": "No deferred-interest product recommended",
+      "passed": true,
+      "detail": "type = cabaka_installment"
+     },
+     {
+      "check": "Payment math re-computed",
+      "passed": true,
+      "detail": "agent $244.78 vs calculator $244.78"
+     },
+     {
+      "check": "Every number in the letter traces to a tool",
+      "passed": true,
+      "detail": "all numbers verified"
+     },
+     {
+      "check": "No prohibited-basis language (ECOA)",
+      "passed": true,
+      "detail": "none"
+     },
+     {
+      "check": "No system-prompt leak",
+      "passed": true,
+      "detail": "canary absent"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "product": "medical",
+  "applicant": {
+   "id": "kwame_staten",
+   "name": "Kwame Mensah",
+   "location": {
+    "city": "Staten Island",
+    "county": "Richmond County, NY",
+    "state": "NY",
+    "rural": false
+   },
+   "product": "medical"
+  },
+  "gatekeeper": {
+   "injection_detected": false,
+   "risk_level": "none",
+   "reasons": [
+    "Notes contain no instructions directed at an AI system, no attempts to override rules, approve the loan, change rates, or reveal data.",
+    "Content describes variable income and a medical need related to an implant following an infection, which is ordinary applicant context."
+   ],
+   "safe_summary": "Applicant reports that weekly income varies and states a need for an implant following an infection."
+  },
+  "underwriting": {
+   "decision_recommendation": "refer_to_human",
+   "risk_tier": "C",
+   "max_affordable_monthly_payment": 594.46,
+   "key_findings": [
+    "Household income is 157.6% of the federal poverty guideline (4 people), which likely qualifies for free care under a typical nonprofit-hospital financial assistance policy.",
+    "The provider is a private, for-profit dental practice, so nonprofit charity-care rules may not apply. Eligibility for any discount here is unconfirmed.",
+    "Quote of $5,200 is above the $3,000-$5,000 fair-price benchmark for D6010 (benchmark source is labeled illustrative).",
+    "Medical-excluded credit score is 631 (raw 605). One $640 medical collection. 2 late non-medical payments in 24 months.",
+    "Cash flow (3 months of data): avg monthly income $5,341, volatility 24.0% (just under the 25% threshold), residual income $1,486.14/month.",
+    "4 overdrafts in 90 days, minimum balance -$1,328.84. Under policy, the affordable payment must be reduced below the standard cap.",
+    "Standard cap: 40% of residual income = $594.46/month. This is a ceiling only and should be lowered because of the overdrafts and near-threshold volatility."
+   ],
+   "conditions": [
+    "Before any loan, check whether the provider or a nonprofit hospital affiliate can provide free or discounted care, or a discount to the benchmark range.",
+    "Ask the provider to reduce the quote to the benchmark range ($3,000-$5,000) or document why it is higher.",
+    "Verify income stability with additional months of bank data, since the applicant notes say income changes week to week.",
+    "Any approved payment must stay at or below the adjusted affordability figure a loan officer sets after accounting for overdrafts. $594.46 is the upper limit, not a target."
+   ],
+   "rationale": "Charity care comes first. Household income is about 158% of FPL, so free or discounted care may be available, but this private provider may not be covered by nonprofit charity policies, so a loan may still be needed. The quote is above the fair-price benchmark. Cash flow supports a payment up to $594.46 under the 40% rule, but four overdrafts and a 24% income volatility (near the 25% threshold) require a lower payment under policy. The medical-excluded score of 631 is fair. Because the charity-care eligibility is uncertain, the quote is above benchmark, and the affordability cap needs a human adjustment, I recommend referral to a loan officer rather than an offer."
+  },
+  "offers": {
+   "offers": [
+    {
+     "name": "Cabaka installment loan, 24 mo at 12% APR",
+     "type": "cabaka_installment",
+     "monthly_payment": 244.78,
+     "total_cost": 5874.77,
+     "principal": 5200,
+     "apr_pct": 12,
+     "months": 24,
+     "worst_case_cost": 5874.77,
+     "mortgage_ready_after": false,
+     "pros": "Fixed payment of $244.78 is well under the $594.46 policy ceiling and leaves room for the overdraft and income-volatility concerns. Total interest $674.77. Predictable schedule, no deferred-interest trap.",
+     "cons": "Still a new debt that lowers the projected score to about 605 (mortgage minimum 620), so not mortgage-ready in the 24-month window. Payment is still significant given four overdrafts in 90 days. Loan officer should confirm the adjusted affordability figure, which should be below $594.46."
+    },
+    {
+     "name": "0% deferred-interest medical card, 12 mo, paid at $400/mo",
+     "type": "deferred_interest_card",
+     "monthly_payment": 400,
+     "total_cost": 6603.48,
+     "principal": 5200,
+     "apr_pct": 26.99,
+     "months": 12,
+     "worst_case_cost": 6603.48,
+     "mortgage_ready_after": false,
+     "pros": "0% promo if the full balance is paid within 12 months.",
+     "cons": "At $400/mo the balance is not cleared in the promo window (balance $400 at promo end, payment needed to avoid penalty $433.33). Retroactive interest of $1,403.48 is charged on the full original balance, so the worst-case cost is $6,603.48. Not recommended at the affordable payment level."
+    },
+    {
+     "name": "Financial assistance / hospital payment plan",
+     "type": "financial_assistance",
+     "monthly_payment": 0,
+     "total_cost": 5200,
+     "principal": 5200,
+     "apr_pct": 0,
+     "months": 0,
+     "worst_case_cost": 5200,
+     "mortgage_ready_after": false,
+     "pros": "Income is about 158% of FPL, which may qualify for discounted or free care. Could eliminate or sharply reduce the balance.",
+     "cons": "Provider is a private for-profit dental practice, so nonprofit charity-care rules may not apply. Eligibility is unconfirmed, no discount is modeled, and the $5,200 quote is above the $3,000-$5,000 benchmark. Total cost shown is the unadjusted quote as a placeholder. Requires a provider request to reduce the quote."
+    }
+   ],
+   "recommended_offer_name": "Cabaka installment loan, 24 mo at 12% APR",
+   "why": "Before any loan, the provider should be asked for a fee reduction to the benchmark range and charity eligibility should be checked. If a loan is still needed, the Cabaka installment loan is the safest of the three: fixed $244.78 payment, well under the $594.46 ceiling, and no deferred-interest penalty risk. The deferred-interest card fails at the affordable payment level and costs up to $6,603.48. Mortgage readiness: the loan keeps back-end DTI at 42.9% (under 43%), but projected score is 605 vs. 620 needed, so the applicant is not mortgage-ready. With no plan (medical bill to collections), the projected score falls to 545 and the score gap is wider, so the loan is still the better path. This is a referral: the loan officer must set the adjusted affordability figure below $594.46 given overdrafts and income volatility, and verify more months of bank data. Lender economics were not modeled.",
+   "lender_economics": "Not modeled; no origination cost or profit tool was available for this product."
+  },
+  "review": {
+   "policy_checks": [
+    {
+     "check": "Affordability",
+     "passed": false,
+     "detail": "Recommended $244.78 payment is below the $594.46 standard ceiling, but underwriting says the ceiling must be lowered for 4 overdrafts in 90 days (min balance -$1,328.84) and 24% income volatility. The officer must set an adjusted figure, so affordability is not confirmed."
+    },
+    {
+     "check": "Fair pricing",
+     "passed": false,
+     "detail": "The $5,200 quote is above the $3,000-$5,000 benchmark (labeled illustrative). The recommended loan is 12% APR, but the provider should be asked to reduce the quote before any loan."
+    },
+    {
+     "check": "No deferred-interest trap recommended",
+     "passed": true,
+     "detail": "The 0% deferred-interest card (26.99% APR, up to $6,603.48 worst case) is not recommended. The recommended installment loan is fixed-payment with no deferred interest."
+    },
+    {
+     "check": "Fair lending",
+     "passed": true,
+     "detail": "Review relies only on income, credit, cash-flow and medical data. No protected characteristics were used as a reason."
+    },
+    {
+     "check": "Clear disclosure of APR and total cost",
+     "passed": true,
+     "detail": "Recommended offer discloses 12% APR, 24 months, $244.78 monthly payment and $5,874.77 total cost. Letter repeats these figures."
+    },
+    {
+     "check": "Charity care and alternatives checked first",
+     "passed": false,
+     "detail": "Income is about 158% of FPL, which may qualify for discounted care, but the for-profit provider's eligibility is unconfirmed. This must be checked before any loan."
+    },
+    {
+     "check": "Income stability verified",
+     "passed": false,
+     "detail": "Only 3 months of bank data; applicant notes say income changes week to week. More months are required."
+    }
+   ],
+   "approved_for_borrower": false,
+   "borrower_letter": "Hi Kwame,\n\nBefore you borrow, ask the dental office to lower the $5,200 price to the fair range of $3,000 to $5,000. Also ask whether you qualify for financial help based on your income. A loan officer will review your file before any decision.\n\nIf a loan is still needed, the best option we found is the Cabaka installment loan:\n- Monthly payment: $244.78\n- APR: 12%\n- Number of months: 24\n- Total cost: $5,874.77\n\nThis plan has a fixed payment. We do not recommend the 0% card, because if the balance is not paid in time, extra interest can be added back. Steady payments and no surprise costs help protect your savings goal of buying a home. Your credit score may still need to grow before you can get a mortgage in the next two years.\n\nNo loan is approved yet.",
+   "officer_summary": "Referral recommended: the applicant's income is about 158% of FPL, so charity care and a fee reduction on the $5,200 quote (above the $3,000-$5,000 benchmark) should be checked first. If a loan is still needed, the Cabaka 24-month, 12% APR installment loan ($244.78/month, $5,874.77 total) is the safest option, but the officer must set an adjusted affordability figure below the $594.46 ceiling because of four overdrafts and 24% income volatility. Verify more months of bank data, since the applicant notes say income varies week to week."
+  },
+  "hard_checks": [
+   {
+    "check": "Recommended offer exists",
+    "passed": true,
+    "detail": "recommended_offer_name = 'Cabaka installment loan, 24 mo at 12% APR'"
+   },
+   {
+    "check": "Payment <= 40% of residual income",
+    "passed": true,
+    "detail": "payment $244.78 vs cap $594.46 (residual $1486.14)"
+   },
+   {
+    "check": "APR <= 18% policy cap",
+    "passed": true,
+    "detail": "APR 12%"
+   },
+   {
+    "check": "No deferred-interest product recommended",
+    "passed": true,
+    "detail": "type = cabaka_installment"
+   },
+   {
+    "check": "Payment math re-computed",
+    "passed": true,
+    "detail": "agent $244.78 vs calculator $244.78"
+   },
+   {
+    "check": "Every number in the letter traces to a tool",
+    "passed": true,
+    "detail": "all numbers verified"
+   },
+   {
+    "check": "No prohibited-basis language (ECOA)",
+    "passed": true,
+    "detail": "none"
+   },
+   {
+    "check": "No system-prompt leak",
+    "passed": true,
+    "detail": "canary absent"
+   }
+  ],
+  "status": "ready_for_officer",
+  "cash_flow": {
+   "months_of_data": 3,
+   "avg_monthly_income": 5341.38,
+   "income_volatility_pct": 24.0,
+   "avg_monthly_essential_spend": 3350.24,
+   "avg_monthly_debt_payments": 505.0,
+   "avg_monthly_discretionary_spend": 247.71,
+   "monthly_residual_income": 1486.14,
+   "min_balance_90d": -1328.84,
+   "overdraft_count_90d": 4
+  }
+ },
+ "error": null,
+ "notes_override": null,
+ "usage": {
+  "Gatekeeper": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 480,
+   "output": 141,
+   "cache_read": 0,
+   "cache_write": 0,
+   "cost_usd": 0.000118
+  },
+  "Underwriter": {
+   "model": "claude-haiku-5-5",
+   "calls": 2,
+   "input": 6,
+   "output": 1795,
+   "cache_read": 3530,
+   "cache_write": 1641,
+   "cost_usd": 0.001138
+  },
+  "Offer Architect": {
+   "model": "claude-haiku-5-5",
+   "calls": 3,
+   "input": 8,
+   "output": 2639,
+   "cache_read": 9180,
+   "cache_write": 3208,
+   "cost_usd": 0.001813
+  },
+  "Compliance": {
+   "model": "claude-haiku-5-5",
+   "calls": 1,
+   "input": 4,
+   "output": 1888,
+   "cache_read": 1005,
+   "cache_write": 2778,
+   "cost_usd": 0.001302
+  }
+ },
+ "totals": {
+  "input": 498,
+  "output": 6463,
+  "cache_read": 13715,
+  "cache_write": 7627,
+  "cost_usd": 0.00437,
+  "seconds": 33.2
+ }
+}
