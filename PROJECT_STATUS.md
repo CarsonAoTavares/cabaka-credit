@@ -27,7 +27,7 @@ Hand this file to any new Claude Code session to pick up where we left off.
 4. Cost-vs-quality test: Opus low vs Opus medium vs Sonnet 5.5 on the 4 normal applicants
    (cost, time, Verifier pass rate). Set the model with `CABAKA_MAIN_MODEL` / `CABAKA_MAIN_EFFORT`.
 5. Fill every **TBD** in `docs/report_src.html` and `docs/slides_src.html`, rebuild, check 10–15 printed pages.
-6. **User:** create a GitHub repo, push; make it public or add `zlisto` as a collaborator.
+6. ~~GitHub repo~~ **Done:** public at https://github.com/CarsonAoTavares/cabaka-credit (push with `git push`).
 7. **User + Claude:** deploy on Render, set `ANTHROPIC_API_KEY` there, put the live link in the README and report.
 8. **User:** one real person tries the app (loan officer, clinic front desk, or patient). Get a quote and their time today vs. with the app.
 9. Optional: 2–3 minute demo video.

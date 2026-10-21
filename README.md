@@ -22,7 +22,7 @@ All applicants are **fictional** (see `scripts/make_synthetic_data.py`). This is
 You need Python 3.10+ and an Anthropic API key.
 
 ```bash
-git clone <this-repo-url> cabaka-credit
+git clone https://github.com/CarsonAoTavares/cabaka-credit.git
 cd cabaka-credit
 python -m venv .venv
 ```
