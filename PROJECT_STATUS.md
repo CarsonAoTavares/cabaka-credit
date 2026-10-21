@@ -28,7 +28,8 @@ Hand this file to any new Claude Code session to pick up where we left off.
    (cost, time, Verifier pass rate). Set the model with `CABAKA_MAIN_MODEL` / `CABAKA_MAIN_EFFORT`.
 5. Fill every **TBD** in `docs/report_src.html` and `docs/slides_src.html`, rebuild, check 10–15 printed pages.
 6. ~~GitHub repo~~ **Done:** public at https://github.com/CarsonAoTavares/cabaka-credit (push with `git push`).
-7. **User + Claude:** deploy on Render, set `ANTHROPIC_API_KEY` there, put the live link in the README and report.
+7. ~~Deploy~~ **Done:** live at https://cabaka-credit.onrender.com (Render free plan, auto-deploys on every push to `main`).
+   **Still needed:** the user pastes `ANTHROPIC_API_KEY` in Render → cabaka-credit → Environment → Save (it redeploys).
 8. **User:** one real person tries the app (loan officer, clinic front desk, or patient). Get a quote and their time today vs. with the app.
 9. Optional: 2–3 minute demo video.
 10. Submit on Canvas: repo link, report.html, slides.html (+ video).

@@ -1,6 +1,7 @@
 # Cabaka Credit — Care-to-Home Copilot
 
-**Live app:** `https://<your-app>.onrender.com`  ← *(add the link after deploying; the free server sleeps, so the first load can take ~50 seconds)*
+**Live app: https://cabaka-credit.onrender.com**
+*(Free hosting: if nobody has used it for 15 minutes the server sleeps, so the first load can take ~50 seconds. Please wait, then refresh.)*
 
 Cabaka Credit is a multi-agent AI app that stops a medical bill from turning into a mortgage denial.
 At a clinic front desk it designs a medical payment plan the patient can actually afford, one that keeps
