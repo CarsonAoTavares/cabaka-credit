@@ -204,3 +204,4 @@ async function openFromHash() {
 
 loadStatus();
 loadApplicants().then(openFromHash);
+window.addEventListener("hashchange", openFromHash);
