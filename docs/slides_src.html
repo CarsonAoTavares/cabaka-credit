@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabaka Credit — Slides</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css">
+<style>
+  .reveal { font-family: "Segoe UI", system-ui, sans-serif; color: #1d2420; }
+  .reveal h1, .reveal h2 { color: #12331a; text-transform: none; font-family: inherit; }
+  .reveal h2 { font-size: 1.5em; }
+  .reveal .accent { color: #2d6a3a; }
+  .reveal .big { font-size: 2.4em; font-weight: 800; color: #2d6a3a; line-height: 1.1; }
+  .reveal .muted { color: #5d6b62; font-size: .6em; }
+  .reveal .cols { display: flex; gap: 30px; text-align: left; }
+  .reveal .cols > div { flex: 1; }
+  .reveal .box { background: #e9f5e7; border-radius: 12px; padding: 16px 20px; font-size: .62em; text-align: left; }
+  .reveal table { font-size: .5em; }
+  .reveal img { max-height: 520px; border: 1px solid #dfe6df; border-radius: 8px; }
+  .reveal .ph { border: 2px dashed #c9b37a; background: #fffbef; color: #8a5a00; padding: 60px; border-radius: 8px; font-size: .5em; }
+  .reveal .tbd { background: #fff4dc; color: #8a5a00; padding: 0 6px; border-radius: 4px; }
+  .reveal ul { font-size: .7em; }
+  .reveal section.title { background: #12331a; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section data-background-color="#12331a">
+  <h1 style="color:#fff">Cabaka Credit</h1>
+  <p style="color:#cfe8cf">AI agents that stop a medical bill from becoming a mortgage denial</p>
+  <p style="color:#9fc79f;font-size:.6em">Carson Tavares · AI Foundations Final Project · October 2026</p>
+</section>
+
+<section>
+  <h2>The problem: one broken credit pipeline</h2>
+  <div class="cols">
+    <div><div class="big">1 in 5</div><p class="muted">Americans have medical debt on their credit report (CFPB 2022)</p></div>
+    <div><div class="big">30% vs 19%</div><p class="muted">rural vs urban buyers denied for credit history (Pew, HMDA 2018–23)</p></div>
+    <div><div class="big">~$11.6k</div><p class="muted">to originate any mortgage, so a $112k loan loses the lender money</p></div>
+  </div>
+  <p style="font-size:.6em">Clinic offers a 0% card → one slip = retroactive ~27% interest → collections → score drops → mortgage denied.</p>
+</section>
+
+<section>
+  <h2>What's new</h2>
+  <div class="cols">
+    <div class="box"><b>Today</b><br>CareCredit: score-based, deferred-interest trap.<br>PayZen: cash-flow plans, but blind to housing.<br>Blend/nCino: built for big loans.<br>ChatGPT: does math in its head, injectable.</div>
+    <div class="box"><b>Cabaka</b><br>Every medical offer is scored by <b>"does the family stay mortgage-ready?"</b><br><b>One agentic rail, two products</b>: clinic loans + small mortgages.<br>Cash-flow + medical-excluded score.<br>Code verifies every number.</div>
+  </div>
+</section>
+
+<section>
+  <h2>How the agents work</h2>
+  <svg viewBox="0 0 780 200" width="100%" font-family="Segoe UI, sans-serif" font-size="13">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2d6a3a"/></marker></defs>
+    <g text-anchor="middle">
+    <rect x="5" y="30" width="135" height="70" rx="10" fill="#e9f5e7" stroke="#2d6a3a"/><text x="72" y="60" font-weight="700">Gatekeeper</text><text x="72" y="80" fill="#5d6b62">Haiku · injection screen</text>
+    <rect x="165" y="30" width="135" height="70" rx="10" fill="#2d6a3a"/><text x="232" y="60" font-weight="700" fill="#fff">Underwriter</text><text x="232" y="80" fill="#d9f0d9">Opus · cash flow, credit</text>
+    <rect x="325" y="30" width="135" height="70" rx="10" fill="#2d6a3a"/><text x="392" y="60" font-weight="700" fill="#fff">Offer Architect</text><text x="392" y="80" fill="#d9f0d9">Opus · calculators</text>
+    <rect x="485" y="30" width="135" height="70" rx="10" fill="#2d6a3a"/><text x="552" y="60" font-weight="700" fill="#fff">Compliance</text><text x="552" y="80" fill="#d9f0d9">Opus · letter</text>
+    <rect x="645" y="30" width="130" height="70" rx="10" fill="#fff4dc" stroke="#8a5a00"/><text x="710" y="60" font-weight="700">Verifier</text><text x="710" y="80" fill="#5d6b62">code · hard rules</text>
+    <rect x="485" y="135" width="290" height="50" rx="10" fill="#e7eefb" stroke="#1d3f7a"/><text x="630" y="165" font-weight="700">Human loan officer approves</text>
+    </g>
+    <line x1="140" y1="65" x2="163" y2="65" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="300" y1="65" x2="323" y2="65" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="460" y1="65" x2="483" y2="65" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="620" y1="65" x2="643" y2="65" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="710" y1="100" x2="690" y2="133" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
+  </svg>
+  <p style="font-size:.55em">11 deterministic tools · all arithmetic in code · same agents for medical loans and small mortgages</p>
+</section>
+
+<section>
+  <h2>Demo: Maria, Bronx, hand surgery</h2>
+  <img src="img/03_offers.png" alt="Offer comparison">
+</section>
+
+<section>
+  <h2>Cost to run</h2>
+  <div class="cols">
+    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">LLM cost per application (measured)</p></div>
+    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">per user per month (60 applications)</p></div>
+    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">10,000 users per month</p></div>
+  </div>
+  <p style="font-size:.55em">Prompt caching · Haiku for screening · Opus at low effort · tools return summaries, not raw data</p>
+</section>
+
+<section>
+  <h2>Safety: defenses that actually fire</h2>
+  <div class="cols">
+    <div><img src="img/06_injection.png" alt="Injection blocked"></div>
+    <div><ul>
+      <li>Prompt injection → Gatekeeper</li>
+      <li>Cross-applicant data → ID lock</li>
+      <li>Invented numbers → Verifier</li>
+      <li>Predatory offers → APR + payment caps</li>
+      <li>Runaway loops → 8-turn cap</li>
+      <li>Overspend → $5/day + rate limit</li>
+      <li>17 automated tests pass</li>
+    </ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>Impact</h2>
+  <div class="cols">
+    <div><div class="big">$1,835</div><p class="muted">retroactive interest Maria avoids vs. a 0% card she can't pay off in time</p></div>
+    <div><div class="big">$387k → $100k</div><p class="muted">smallest profitable mortgage, if origination falls from ~$11.6k to $3k</p></div>
+    <div><div class="big"><span class="tbd">TBD</span></div><p class="muted">real user: time today vs. with Cabaka</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>What's next</h2>
+  <ul>
+    <li>Pilot: 2 clinics + 1 community bank (concierge MVP, 90 days)</li>
+    <li>Real data: bank-account connection, bureau pull, CMS prices, HMDA by county</li>
+    <li>Servicing agent: spot trouble and adjust the plan before default</li>
+    <li>Fair-lending (ECOA) disparate-impact testing before production</li>
+  </ul>
+  <p class="muted">All applicants are fictional. Student prototype, not an offer of credit.</p>
+</section>
+
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script>Reveal.initialize({ hash: true, width: 1100, height: 700 });</script>
+</body>
+</html>

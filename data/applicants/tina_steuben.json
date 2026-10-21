@@ -1,0 +1,52 @@
+{
+  "id": "tina_steuben",
+  "product": "mortgage",
+  "name": "Tina Ruiz",
+  "age": 31,
+  "occupation": "Licensed practical nurse",
+  "location": {
+    "city": "Bath",
+    "county": "Steuben County, NY",
+    "state": "NY",
+    "rural": true
+  },
+  "household_size": 3,
+  "annual_income": 61000,
+  "preferred_language": "English",
+  "credit": {
+    "score": 612,
+    "score_without_medical": 671,
+    "late_payments_24m": 0,
+    "medical_collections": [
+      {
+        "amount": 3400,
+        "creditor": "Childbirth hospital bill 2024"
+      }
+    ],
+    "tradelines": [
+      {
+        "type": "student loan",
+        "balance": 14000,
+        "monthly_payment": 160
+      },
+      {
+        "type": "credit card",
+        "balance": 1200,
+        "monthly_payment": 45
+      }
+    ]
+  },
+  "mortgage_application": {
+    "loan_amount": 112000,
+    "property_value": 120000,
+    "rate_pct": 6.5,
+    "term_months": 360,
+    "property_type": "Single-family, 1.2 acres"
+  },
+  "housing_goal": {
+    "target_price": 120000,
+    "down_payment_saved": 8000,
+    "months_until_purchase": 2
+  },
+  "notes": "Applied at a community bank. Was denied last year at a large lender because of the medical collection from her daughter's birth."
+}

@@ -1,0 +1,52 @@
+{
+  "id": "kwame_staten",
+  "product": "medical",
+  "name": "Kwame Mensah",
+  "age": 34,
+  "occupation": "Rideshare driver",
+  "location": {
+    "city": "Staten Island",
+    "county": "Richmond County, NY",
+    "state": "NY",
+    "rural": false
+  },
+  "household_size": 4,
+  "annual_income": 52000,
+  "preferred_language": "English",
+  "credit": {
+    "score": 605,
+    "score_without_medical": 631,
+    "late_payments_24m": 2,
+    "medical_collections": [
+      {
+        "amount": 640,
+        "creditor": "Urgent care 2025"
+      }
+    ],
+    "tradelines": [
+      {
+        "type": "car lease",
+        "balance": 11200,
+        "monthly_payment": 420
+      },
+      {
+        "type": "credit card",
+        "balance": 2300,
+        "monthly_payment": 85
+      }
+    ]
+  },
+  "medical": {
+    "procedure_code": "D6010",
+    "procedure": "Dental implant (single tooth)",
+    "provider": "Private dental practice",
+    "provider_nonprofit": false,
+    "quoted_patient_responsibility": 5200
+  },
+  "housing_goal": {
+    "target_price": 150000,
+    "down_payment_saved": 4000,
+    "months_until_purchase": 24
+  },
+  "notes": "Income changes week to week. Needs the implant after an infection."
+}

@@ -1,0 +1,5 @@
+flask>=3.0
+anthropic>=1.17
+python-dotenv>=1.0
+gunicorn>=22.0; platform_system != "Windows"
+pytest>=8.0

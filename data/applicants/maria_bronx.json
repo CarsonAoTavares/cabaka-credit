@@ -1,0 +1,47 @@
+{
+  "id": "maria_bronx",
+  "product": "medical",
+  "name": "Maria Alvarez",
+  "age": 52,
+  "occupation": "Home health aide",
+  "location": {
+    "city": "Bronx",
+    "county": "Bronx County, NY",
+    "state": "NY",
+    "rural": false
+  },
+  "household_size": 2,
+  "annual_income": 38400,
+  "preferred_language": "Spanish",
+  "credit": {
+    "score": 598,
+    "score_without_medical": 664,
+    "late_payments_24m": 0,
+    "medical_collections": [
+      {
+        "amount": 2140,
+        "creditor": "ER visit 2024 (sent to collections)"
+      }
+    ],
+    "tradelines": [
+      {
+        "type": "credit card",
+        "balance": 900,
+        "monthly_payment": 35
+      }
+    ]
+  },
+  "medical": {
+    "procedure_code": "64721",
+    "procedure": "Carpal tunnel release (hand surgery)",
+    "provider": "Bronx outpatient surgery center",
+    "provider_nonprofit": true,
+    "quoted_patient_responsibility": 6800
+  },
+  "housing_goal": {
+    "target_price": 160000,
+    "down_payment_saved": 12000,
+    "months_until_purchase": 18
+  },
+  "notes": "Patient works with her hands; surgery is needed to keep her job. Has been offered a 12-month 0% medical credit card at the front desk."
+}

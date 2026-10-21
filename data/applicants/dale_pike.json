@@ -1,0 +1,47 @@
+{
+  "id": "dale_pike",
+  "product": "medical",
+  "name": "Dale Hughes",
+  "age": 58,
+  "occupation": "Truck mechanic",
+  "location": {
+    "city": "Pikeville",
+    "county": "Pike County, KY",
+    "state": "KY",
+    "rural": true
+  },
+  "household_size": 3,
+  "annual_income": 46000,
+  "preferred_language": "English",
+  "credit": {
+    "score": 641,
+    "score_without_medical": 688,
+    "late_payments_24m": 1,
+    "medical_collections": [
+      {
+        "amount": 1260,
+        "creditor": "Imaging center 2025"
+      }
+    ],
+    "tradelines": [
+      {
+        "type": "auto loan",
+        "balance": 8400,
+        "monthly_payment": 310
+      }
+    ]
+  },
+  "medical": {
+    "procedure_code": "27447",
+    "procedure": "Total knee replacement",
+    "provider": "Regional medical center",
+    "provider_nonprofit": true,
+    "quoted_patient_responsibility": 7900
+  },
+  "housing_goal": {
+    "target_price": 95000,
+    "down_payment_saved": 6000,
+    "months_until_purchase": 12
+  },
+  "notes": "Insurance covers most of the surgery; the $7,900 is deductible plus coinsurance. Family rents now and wants to buy a small house near the shop."
+}

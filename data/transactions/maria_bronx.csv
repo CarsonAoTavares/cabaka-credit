@@ -1,0 +1,72 @@
+date,description,category,amount,balance
+2026-07-01,Rent,rent,-1150,250
+2026-07-03,Gas / transit,transport,-14.59,235.41
+2026-07-04,Groceries,groceries,-87.96,147.45
+2026-07-04,Other,other,-47.0,100.45
+2026-07-05,Payroll deposit,income,1284.32,1384.77
+2026-07-07,Gas / transit,transport,-18.41,1366.36
+2026-07-08,Utilities,utilities,-140,1226.36
+2026-07-08,Phone,phone,-55,1171.36
+2026-07-10,Gas / transit,transport,-12.86,1158.5
+2026-07-11,Groceries,groceries,-99.15,1059.35
+2026-07-11,Other,other,-34.76,1024.59
+2026-07-14,Gas / transit,transport,-14.04,1010.55
+2026-07-15,Debt Payment,debt_payment,-35,975.55
+2026-07-17,Gas / transit,transport,-16.82,958.73
+2026-07-18,Groceries,groceries,-84.81,873.92
+2026-07-18,Other,other,-44.89,829.03
+2026-07-19,Payroll deposit,income,1340.93,2169.96
+2026-07-21,Gas / transit,transport,-18.35,2151.61
+2026-07-24,Gas / transit,transport,-13.98,2137.63
+2026-07-25,Groceries,groceries,-85.79,2051.83
+2026-07-25,Other,other,-43.46,2008.38
+2026-07-28,Gas / transit,transport,-13.21,1995.16
+2026-07-31,Gas / transit,transport,-17.48,1977.68
+2026-08-01,Rent,rent,-1150,827.68
+2026-08-01,Groceries,groceries,-95.14,732.54
+2026-08-01,Other,other,-32.19,700.35
+2026-08-02,Payroll deposit,income,1276.24,1976.59
+2026-08-04,Gas / transit,transport,-16.01,1960.58
+2026-08-07,Gas / transit,transport,-17.81,1942.77
+2026-08-08,Utilities,utilities,-140,1802.77
+2026-08-08,Groceries,groceries,-99.23,1703.54
+2026-08-08,Phone,phone,-55,1648.54
+2026-08-08,Other,other,-44.08,1604.45
+2026-08-11,Gas / transit,transport,-14.14,1590.31
+2026-08-14,Gas / transit,transport,-13.71,1576.6
+2026-08-15,Groceries,groceries,-109.35,1467.25
+2026-08-15,Debt Payment,debt_payment,-35,1432.25
+2026-08-15,Other,other,-34.36,1397.89
+2026-08-16,Payroll deposit,income,1284.8,2682.69
+2026-08-18,Gas / transit,transport,-14.68,2668.01
+2026-08-21,Gas / transit,transport,-13.87,2654.14
+2026-08-22,Groceries,groceries,-84.8,2569.33
+2026-08-22,Other,other,-38.23,2531.1
+2026-08-25,Gas / transit,transport,-17.88,2513.23
+2026-08-28,Gas / transit,transport,-14.51,2498.72
+2026-08-29,Groceries,groceries,-81.76,2416.96
+2026-08-29,Other,other,-33.84,2383.12
+2026-08-30,Payroll deposit,income,1299.52,3682.65
+2026-09-01,Rent,rent,-1150,2532.65
+2026-09-01,Gas / transit,transport,-17.52,2515.13
+2026-09-04,Gas / transit,transport,-17.27,2497.86
+2026-09-05,Groceries,groceries,-107.9,2389.96
+2026-09-05,Other,other,-45.0,2344.96
+2026-09-08,Utilities,utilities,-140,2204.96
+2026-09-08,Gas / transit,transport,-14.01,2190.95
+2026-09-08,Phone,phone,-55,2135.95
+2026-09-11,Gas / transit,transport,-16.64,2119.31
+2026-09-12,Groceries,groceries,-83.41,2035.91
+2026-09-12,Other,other,-42.8,1993.11
+2026-09-13,Payroll deposit,income,1277.68,3270.79
+2026-09-15,Gas / transit,transport,-14.88,3255.91
+2026-09-15,Debt Payment,debt_payment,-35,3220.91
+2026-09-18,Gas / transit,transport,-15.72,3205.19
+2026-09-19,Groceries,groceries,-89.58,3115.61
+2026-09-19,Other,other,-40.41,3075.21
+2026-09-22,Gas / transit,transport,-14.14,3061.07
+2026-09-25,Gas / transit,transport,-16.13,3044.94
+2026-09-26,Groceries,groceries,-89.42,2955.51
+2026-09-26,Other,other,-41.81,2913.7
+2026-09-27,Payroll deposit,income,1335.69,4249.39
+2026-09-29,Gas / transit,transport,-15.23,4234.16

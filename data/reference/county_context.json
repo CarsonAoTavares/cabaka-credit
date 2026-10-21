@@ -1,0 +1,14 @@
+{
+  "Bronx County, NY": {"rural": false, "area_median_income": 90000,
+    "credit_history_denial_rate_pct": 19, "share_of_home_sales_under_150k_financed_with_mortgage_pct": null,
+    "source": "Urban credit-history denial rate: Pew analysis of HMDA 2018-2023 (national urban average). AMI illustrative."},
+  "Richmond County, NY": {"rural": false, "area_median_income": 110000,
+    "credit_history_denial_rate_pct": 19,
+    "source": "Urban credit-history denial rate: Pew analysis of HMDA 2018-2023 (national urban average). AMI illustrative."},
+  "Pike County, KY": {"rural": true, "area_median_income": 52000,
+    "credit_history_denial_rate_pct": 30, "medical_debt_in_collections_pct": 28,
+    "source": "Rural denial rate and rural-South medical collections share: Pew (2024), HMDA 2018-2023. AMI illustrative."},
+  "Steuben County, NY": {"rural": true, "area_median_income": 78000,
+    "credit_history_denial_rate_pct": 30,
+    "source": "Rural credit-history denial rate: Pew analysis of HMDA 2018-2023 (national rural average). AMI illustrative."}
+}

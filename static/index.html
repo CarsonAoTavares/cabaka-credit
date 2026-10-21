@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabaka Credit — Care-to-Home Copilot</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">C</span> Cabaka Credit <small>Care-to-Home Copilot</small></div>
+  <nav>
+    <button class="tab active" data-tab="work">Workbench</button>
+    <button class="tab" data-tab="usage">Usage &amp; cost</button>
+    <button class="tab" data-tab="about">How it works</button>
+  </nav>
+  <div id="statusPill" class="pill">checking…</div>
+</header>
+
+<main>
+<section id="tab-work" class="tabpane active">
+  <aside class="left">
+    <h3>1 · Pick an applicant</h3>
+    <p class="hint">Fictional files. Medical loans come from a clinic front desk; small mortgages from a community bank.</p>
+    <div id="applicants"></div>
+  </aside>
+
+  <div class="center">
+    <div id="empty" class="card empty">
+      <h2>Medical bills shouldn't cost a family their home.</h2>
+      <p>Pick an applicant on the left. Four AI agents will screen the file, underwrite it on real cash flow,
+         design an affordable offer that keeps the family mortgage-ready, and explain it in plain words.
+         A human loan officer approves.</p>
+    </div>
+
+    <div id="detail" class="card hidden">
+      <div class="row between">
+        <div><h2 id="dName"></h2><div id="dMeta" class="muted"></div></div>
+        <span id="dProduct" class="badge"></span>
+      </div>
+      <div id="dFacts" class="facts"></div>
+      <label class="lbl">Applicant notes <span class="muted">(free text from the front desk — this is untrusted input, try typing an attack)</span></label>
+      <textarea id="dNotes" rows="3"></textarea>
+      <div class="row">
+        <button id="runBtn" class="primary">▶ Run Cabaka agents</button>
+        <span id="runInfo" class="muted"></span>
+      </div>
+    </div>
+
+    <div id="pipe" class="card hidden">
+      <h3>2 · Agents at work</h3>
+      <div class="flow">
+        <div class="node" data-agent="Gatekeeper"><b>Gatekeeper</b><small>screens untrusted text</small></div>
+        <div class="arrow">→</div>
+        <div class="node" data-agent="Underwriter"><b>Underwriter</b><small>cash flow + credit</small></div>
+        <div class="arrow">→</div>
+        <div class="node" data-agent="Offer Architect"><b>Offer Architect</b><small>designs &amp; compares</small></div>
+        <div class="arrow">→</div>
+        <div class="node" data-agent="Compliance"><b>Compliance</b><small>checks &amp; explains</small></div>
+        <div class="arrow">→</div>
+        <div class="node" data-agent="Verifier"><b>Verifier</b><small>hard rules (code)</small></div>
+      </div>
+      <div id="timeline" class="timeline"></div>
+    </div>
+
+    <div id="results" class="hidden">
+      <div class="card">
+        <div class="row between">
+          <h3>3 · Recommendation</h3>
+          <span id="rStatus" class="badge"></span>
+        </div>
+        <div id="rDecision" class="decision"></div>
+        <div id="rOffers"></div>
+        <div id="rChart" class="chart"></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Letter to the borrower</h3><div id="rLetter" class="letter"></div></div>
+        <div class="card"><h3>Safety checks</h3><div id="rChecks"></div>
+          <h4>Loan officer summary</h4><p id="rOfficer"></p>
+          <div class="row"><button class="primary" id="approveBtn">✓ Officer approves</button>
+          <button id="rejectBtn">Send back</button></div><p id="officerMsg" class="muted"></p></div>
+      </div>
+    </div>
+
+    <div id="receipt" class="card hidden">
+      <h3>Token receipt for this run</h3>
+      <div id="rTokens"></div>
+    </div>
+  </div>
+</section>
+
+<section id="tab-usage" class="tabpane">
+  <div class="card">
+    <h2>Usage &amp; cost</h2>
+    <p class="muted">Every model call is logged with real token counts from the API (logs/usage.jsonl).</p>
+    <div id="usageSummary" class="facts"></div>
+    <div id="usageTable"></div>
+  </div>
+</section>
+
+<section id="tab-about" class="tabpane">
+  <div class="card prose">
+    <h2>How it works</h2>
+    <p><b>The problem.</b> One hospital visit can block a family from owning a home: unpaid medical bills go to
+    collections, the credit score drops, and the mortgage is denied. Meanwhile, small mortgages (&lt;$150k) cost
+    lenders about as much to originate as big ones, so few banks make them.</p>
+    <p><b>One agentic rail, two products.</b> The same four agents handle a medical loan at the clinic and a small
+    mortgage at a community bank. Only the policy and tool set change.</p>
+    <ol>
+      <li><b>Gatekeeper</b> (Claude Haiku): screens the free-text notes for prompt injection, plus a regex pre-filter.</li>
+      <li><b>Underwriter</b> (Claude Opus): calls cash-flow, credit, benchmark and eligibility tools; recommends a max affordable payment.</li>
+      <li><b>Offer Architect</b> (Claude Opus): builds and compares options with exact calculators, including the deferred-interest trap and the effect on mortgage readiness.</li>
+      <li><b>Compliance &amp; Explainer</b> (Claude Opus): checks policy and fair lending, writes a plain-language letter in the borrower's language.</li>
+      <li><b>Verifier</b> (plain code): re-computes the math, checks every $ and % in the letter against tool outputs, enforces payment and APR caps, blocks prompt leaks.</li>
+    </ol>
+    <p><b>Guards.</b> Agents can only read the one applicant file being reviewed; max 8 turns per agent; per-run token cap;
+    daily dollar budget; per-visitor rate limit. A human loan officer always makes the final decision.</p>
+    <p class="muted">All applicants are fictional. Benchmarks marked "illustrative" are demo values. This is a prototype, not a lending offer.</p>
+  </div>
+</section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

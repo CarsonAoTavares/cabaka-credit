@@ -1,0 +1,12 @@
+{
+  "64721": {"name": "Carpal tunnel release", "fair_price_low": 1800, "fair_price_high": 4500,
+            "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"},
+  "27447": {"name": "Total knee replacement", "fair_price_low": 20000, "fair_price_high": 35000,
+            "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"},
+  "D6010": {"name": "Dental implant, single tooth", "fair_price_low": 3000, "fair_price_high": 5000,
+            "source": "Demo benchmark range (illustrative; replace with ADA fee survey data)"},
+  "47562": {"name": "Laparoscopic gallbladder removal", "fair_price_low": 7000, "fair_price_high": 15000,
+            "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"},
+  "59400": {"name": "Routine obstetric care, vaginal delivery", "fair_price_low": 8000, "fair_price_high": 14000,
+            "source": "Demo benchmark range (illustrative; replace with CMS / Healthcare Bluebook data)"}
+}

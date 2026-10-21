@@ -1,0 +1,8 @@
+{
+  "rate_pct": 6.5,
+  "tax_ins_pct_of_value": 1.5,
+  "max_dti_pct": 43,
+  "min_score": 620,
+  "collections_score_hit": 60,
+  "source": "Demo underwriting assumptions (30-yr fixed, QM-style 43% DTI cap)"
+}
