@@ -52,27 +52,30 @@ Staten Island; nationally it means rural counties where small homes are common.<
 <p><b>How it works today, and what it costs.</b> The clinic, the bank and the family each see one piece:</p>
 <ul>
   <li><b>At the clinic</b>, patients are offered a 0%-promo medical credit card underwritten on a credit score, not on
-  whether they can pay. Miss the promo deadline and <i>all</i> interest since day one is charged retroactively at ~27%
-  (CFPB, <i>Medical Credit Cards and Financing Plans</i>, 2023). For our fictional patient Maria, a $6,800 surgery
-  paid at the $450/month she can afford triggers <b>$1,835 of retroactive interest</b> (output of the app's
-  <code>simulate_deferred_interest_card</code> tool).</li>
-  <li><b>On the credit report</b>, about 1 in 5 Americans carries medical debt in collections (CFPB, <i>Medical Debt
-  Burden in the United States</i>, 2022), even though it is a poor predictor of repayment.</li>
-  <li><b>At the bank</b>, 30% of rural mortgage applicants are denied for credit history vs. 19% urban (Pew analysis of
-  HMDA 2018–2023). And a small mortgage costs about as much to originate as a large one (~$11,600 per loan, industry
-  cost-to-originate studies), so a $112k loan earning ~3% loses the lender money. Lenders stop making them
-  (Pew, <i>Small Mortgages Are Too Hard to Get</i>, 2022; CFPB 2026 Opportunity Project sprint brief).</li>
+  whether they can pay. CareCredit charges 26.99% during a 6–24 month promo; if any balance is left at the end,
+  <i>all</i> of that interest is charged [3]. Patients paid about $1 billion in deferred interest on medical cards and
+  loans in 2018–2020 [4]. For our fictional patient Maria, a $6,800 surgery paid at the $450/month she can afford
+  triggers <b>$1,835 of retroactive interest</b> (output of the app's <code>simulate_deferred_interest_card</code> tool).</li>
+  <li><b>On the credit report</b>, medical collections sat on 43 million credit reports, about $88 billion, and about
+  1 in 5 households report medical debt [1]. Americans owe at least $220 billion in medical debt overall [2]. Medical debt
+  is a poor predictor of repayment [1][5], yet the CFPB rule that would have removed it from credit reports was
+  vacated by a federal court in July 2025 [6]. Lenders still see it.</li>
+  <li><b>At the bank</b>, 30% of would-be rural homebuyers were denied for credit history vs. 19% urban; for small
+  mortgages, credit scores were the leading cause of denial; and 28% of rural Southerners have medical bills in
+  collections vs. 17% elsewhere [5]. Only 26% of low-cost homes are bought with a mortgage, versus 71% of
+  higher-cost homes [7]. One reason: originating any retail mortgage cost about $11,600 in Q3 2023 [8], so a $112k
+  loan earning ~3% loses the lender money.</li>
 </ul>
 <p><b>Why care.</b> For these families a single hospital visit quietly becomes a housing denial years later. The CFPB
 itself has asked technologists to "use data and technology to improve access to credit and reduce the origination
-cost of small dollar loans" (CFPB / Census Opportunity Project, 2026 sprint topic).</p>
+cost of small dollar loans" [9].</p>
 
 <!-- 3. What is new -->
 <h2>3. What is new here</h2>
 <table>
   <tr><th>Existing product</th><th>What it does</th><th>What it misses</th></tr>
   <tr><td>CareCredit (Synchrony), AccessOne</td><td>Point-of-care medical credit; deferred-interest promos</td><td>Score-based, not cash-flow based; the deferred-interest trap; no view of the patient's housing goals</td></tr>
-  <tr><td>PayZen, Walnut, Sunbit</td><td>AI/cash-flow patient payment plans, often 0%</td><td><i>Closest competitor.</i> Optimises the hospital's collections; does not model mortgage readiness or serve the bank side</td></tr>
+  <tr><td>PayZen</td><td>AI-driven, interest-free patient payment plans that look beyond FICO; buys the receivable so the provider is paid upfront [10]</td><td><i>Closest competitor.</i> Built to lift the provider's collections; does not model the patient's mortgage readiness or serve the community-bank side</td></tr>
   <tr><td>Blend, Ocrolus, nCino, Rocket</td><td>Mortgage origination software and document automation</td><td>Built for large loans and big lenders; still uses raw credit score; no link to medical debt</td></tr>
   <tr><td>ChatGPT / Claude chat</td><td>Can explain loans</td><td>Does arithmetic in its head, can be prompt-injected, no access to the borrower's data, no audit trail or policy enforcement</td></tr>
 </table>
@@ -87,12 +90,12 @@ somewhere. The combination, aimed at small-loan borrowers that the market ignore
 <!-- 4. Agents -->
 <h2>4. The agents</h2>
 <figure>
-<svg viewBox="0 0 780 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" font-size="12">
+<svg viewBox="0 0 810 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" font-size="12">
   <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2d6a3a"/></marker></defs>
   <rect x="10" y="20" width="120" height="70" rx="10" fill="#f6f8f5" stroke="#5d6b62"/>
   <text x="70" y="45" text-anchor="middle" font-weight="700">Applicant file</text>
-  <text x="70" y="62" text-anchor="middle" fill="#5d6b62">90-day bank txns,</text>
-  <text x="70" y="77" text-anchor="middle" fill="#5d6b62">credit, notes (untrusted)</text>
+  <text x="70" y="62" text-anchor="middle" fill="#5d6b62">bank txns, credit,</text>
+  <text x="70" y="77" text-anchor="middle" fill="#5d6b62">notes (untrusted)</text>
   <rect x="160" y="20" width="120" height="70" rx="10" fill="#e9f5e7" stroke="#2d6a3a"/>
   <text x="220" y="45" text-anchor="middle" font-weight="700">Gatekeeper</text>
   <text x="220" y="62" text-anchor="middle" fill="#5d6b62">Haiku 5.5</text>
@@ -117,13 +120,13 @@ somewhere. The combination, aimed at small-loan borrowers that the market ignore
   <text x="665" y="163" text-anchor="middle" font-weight="700">Verifier (plain code)</text>
   <text x="665" y="181" text-anchor="middle" fill="#5d6b62">re-checks math, numbers, caps, leaks</text>
   <line x1="710" y1="90" x2="690" y2="138" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
-  <path d="M560,175 C460,175 470,120 640,92" fill="none" stroke="#b3261e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/>
-  <text x="430" y="180" fill="#b3261e">1 repair round if a check fails</text>
+  <path d="M770,170 C805,170 805,55 773,55" fill="none" stroke="#b3261e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="665" y="218" text-anchor="middle" fill="#b3261e">↺ 1 repair round if a check fails</text>
   <rect x="300" y="140" width="210" height="60" rx="10" fill="#e7eefb" stroke="#1d3f7a"/>
   <text x="405" y="163" text-anchor="middle" font-weight="700">Human loan officer</text>
   <text x="405" y="181" text-anchor="middle" fill="#5d6b62">approves or sends back</text>
   <line x1="560" y1="190" x2="512" y2="190" stroke="#2d6a3a" stroke-width="2" marker-end="url(#a)"/>
-  <text x="10" y="235" fill="#5d6b62">Same rail for both products: Medical loan (clinic) and Small mortgage (community bank). Only policy text + tool set change.</text>
+  <text x="10" y="250" fill="#5d6b62">Same rail for both products: Medical loan (clinic) and Small mortgage (community bank). Only policy text + tool set change.</text>
 </svg>
 <figcaption>Figure 1. Pipeline. Agents hand work forward as structured JSON (each ends by calling its own submit tool).</figcaption>
 </figure>
@@ -201,7 +204,7 @@ and on the <i>Usage &amp; cost</i> tab.</p>
 <table>
   <tr><th>Metric</th><th>Today</th><th>With Cabaka</th><th>Source</th></tr>
   <tr><td>Maria's cost if one promo payment slips</td><td>$6,800 + $1,835 retroactive interest</td><td><span class="tbd">TBD from run</span></td><td>App tools, run log</td></tr>
-  <tr><td>Lender cost to originate a $112k mortgage</td><td>~$11,600 (loses ~$8,240)</td><td>$3,000 target (+$360)</td><td>Industry cost-to-originate studies; Cabaka assumption</td></tr>
+  <tr><td>Lender cost to originate a $112k mortgage</td><td>~$11,600 (loses ~$8,240)</td><td>$3,000 target (+$360)</td><td>Freddie Mac [8]; Cabaka assumption (the top 25% of lenders already reach $6,900)</td></tr>
   <tr><td>Smallest profitable mortgage at 3% revenue</td><td>~$386,700</td><td>~$100,000</td><td><code>estimate_origination_cost</code></td></tr>
   <tr><td>Time to a complete underwriting package</td><td><span class="tbd">TBD: loan officer interview</span></td><td><span class="tbd">TBD: measured run time</span></td><td>Run logs + user interview</td></tr>
   <tr><td>LLM cost per application</td><td>—</td><td><span class="tbd">TBD</span></td><td>Measured</td></tr>
@@ -217,6 +220,20 @@ and on the <i>Usage &amp; cost</i> tab.</p>
   <li><b>Fair-lending testing.</b> Needs disparate-impact testing on real outcomes before any production use.</li>
   <li><b>Next month:</b> a pilot with one clinic and one community bank; a servicing agent; a Spanish voice interface.</li>
 </ul>
+<h2>Sources</h2>
+<ol style="font-size:9.5pt">
+  <li>CFPB, <a href="https://files.consumerfinance.gov/f/documents/cfpb_medical-debt-burden-in-the-united-states_report_2022-03.pdf"><i>Medical Debt Burden in the United States</i></a>, March 2022.</li>
+  <li>KFF, <a href="https://www.kff.org/health-costs/issue-brief/the-burden-of-medical-debt-in-the-united-states/"><i>The Burden of Medical Debt in the United States</i></a>, Feb 2024.</li>
+  <li>CFPB, <a href="https://www.consumerfinance.gov/about-us/newsroom/cfpb-orders-ge-carecredit-to-refund-34-1-million-for-deceptive-health-care-credit-card-enrollment/">CFPB orders GE CareCredit to refund $34.1 million</a>, Dec 2013.</li>
+  <li>CFPB report on medical credit cards and financing plans (2023), as reported by <a href="https://www.healthcaredive.com/news/synchrony-wells-fargo-bread-medical-credit-cards-installment-payments/649742/">Healthcare Dive</a>.</li>
+  <li>Pew, <a href="https://www.pewtrusts.org/en/research-and-analysis/articles/2024/12/19/3-major-obstacles-limit-rural-homeownership"><i>3 Major Obstacles Limit Rural Homeownership</i></a>, Dec 2024 (HMDA 2018–2023).</li>
+  <li><a href="https://www.checkbook.org/washington-area/consumers-notebook/articles/Federal-Judge-Kills-CFPB-Rule-that-Banned-Medical-Debt-in-Credit-Reports-7678">Federal Judge Kills CFPB Rule that Banned Medical Debt in Credit Reports</a>, Checkbook, July 2025.</li>
+  <li>Pew, <a href="https://www.pew.org/en/research-and-analysis/issue-briefs/2023/06/small-mortgages-are-too-hard-to-get"><i>Small Mortgages Are Too Hard to Get</i></a>, June 2023.</li>
+  <li>Freddie Mac, <a href="https://sf.freddiemac.com/articles/insights/2024-cost-to-originate-study"><i>2024 Cost to Originate Study</i></a>.</li>
+  <li>CFPB / Census Open Innovation Labs, <i>The Opportunity Project 2026 Sprint: Increasing Access to Small Dollar Loans in Rural America</i>.</li>
+  <li><a href="https://payzen.com/platform/">PayZen platform page</a> (company claims).</li>
+  <li>HHS ASPE, <a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines">2026 Poverty Guidelines</a> (used by the charity-care tool).</li>
+</ol>
 <p class="sub">All people in this report and app are fictional. This is a student prototype, not an offer of credit.</p>
 </body>
 </html>

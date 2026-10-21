@@ -2,5 +2,5 @@
   "traditional_cost_per_loan": 11600,
   "agent_assisted_cost_per_loan": 3000,
   "revenue_bps": 300,
-  "source": "Traditional cost: approx. industry cost to originate (Freddie Mac 2024 Cost to Originate study / MBA). Agent-assisted cost and 300 bps revenue are Cabaka planning assumptions."
+  "source": "Traditional cost: $11,600 average retail cost to originate, Q3 2023 (Freddie Mac 2024 Cost to Originate Study). Agent-assisted cost and 300 bps revenue are Cabaka planning assumptions."
 }

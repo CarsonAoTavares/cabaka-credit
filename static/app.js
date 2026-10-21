@@ -186,5 +186,21 @@ async function loadUsage() {
     ${list.map((x) => `<tr><td>${esc(x.run_id)}</td><td>${x.day}</td><td class="num">${x.calls}</td><td class="num">${x.input.toLocaleString()}</td><td class="num">${x.cache_read.toLocaleString()}</td><td class="num">${x.cache_write.toLocaleString()}</td><td class="num">${x.output.toLocaleString()}</td><td class="num">${money(x.cost.toFixed(4))}</td></tr>`).join("")}</table>`;
 }
 
+// Deep links: #maria_bronx preselects an applicant; #run=<id> replays a finished run.
+async function openFromHash() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return;
+  if (h.startsWith("run=")) {
+    const run = await (await fetch("/api/runs/" + h.slice(4))).json();
+    if (run.error) return;
+    select(run.applicant_id);
+    if (run.notes_override != null) $("#dNotes").value = run.notes_override;
+    $("#pipe").classList.remove("hidden");
+    await poll(run.id);
+  } else if (applicants.some((a) => a.id === h)) {
+    select(h);
+  }
+}
+
 loadStatus();
-loadApplicants();
+loadApplicants().then(openFromHash);

@@ -77,8 +77,9 @@ def get_credit_report(applicant_id: str) -> dict:
         "medical_collections": c["medical_collections"],
         "non_medical_tradelines": c["tradelines"],
         "late_payments_24m_non_medical": c["late_payments_24m"],
-        "note": "Medical collections are a weak predictor of repayment (CFPB 2022/2025); "
-                "Cabaka policy underwrites on the medical-excluded score plus cash flow.",
+        "note": "Medical debt is a poor predictor of repayment (CFPB 2022; Pew 2024). The CFPB rule removing it "
+                "from credit reports was vacated in July 2025, so lenders still see it. Cabaka policy "
+                "underwrites on the medical-excluded score plus cash flow.",
     }
 
 

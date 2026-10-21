@@ -11,7 +11,7 @@
   .reveal h1, .reveal h2 { color: #12331a; text-transform: none; font-family: inherit; }
   .reveal h2 { font-size: 1.5em; }
   .reveal .accent { color: #2d6a3a; }
-  .reveal .big { font-size: 2.4em; font-weight: 800; color: #2d6a3a; line-height: 1.1; }
+  .reveal .big { font-size: 1.7em; white-space: nowrap; font-weight: 800; color: #2d6a3a; line-height: 1.1; }
   .reveal .muted { color: #5d6b62; font-size: .6em; }
   .reveal .cols { display: flex; gap: 30px; text-align: left; }
   .reveal .cols > div { flex: 1; }
@@ -34,13 +34,14 @@
 </section>
 
 <section>
-  <h2>The problem: one broken credit pipeline</h2>
+  <h2>The problem: one broken pipeline</h2>
   <div class="cols">
-    <div><div class="big">1 in 5</div><p class="muted">Americans have medical debt on their credit report (CFPB 2022)</p></div>
+    <div><div class="big">43M</div><p class="muted">credit reports carry medical collections, a poor predictor of repayment (CFPB 2022)</p></div>
     <div><div class="big">30% vs 19%</div><p class="muted">rural vs urban buyers denied for credit history (Pew, HMDA 2018–23)</p></div>
-    <div><div class="big">~$11.6k</div><p class="muted">to originate any mortgage, so a $112k loan loses the lender money</p></div>
+    <div><div class="big">$11.6k</div><p class="muted">to originate a mortgage (Freddie Mac, Q3 2023), so a $112k loan loses the lender money</p></div>
   </div>
-  <p style="font-size:.6em">Clinic offers a 0% card → one slip = retroactive ~27% interest → collections → score drops → mortgage denied.</p>
+  <p style="font-size:.6em">Clinic offers a 0% card → one slip = retroactive 26.99% interest → collections → score drops → mortgage denied.<br>
+  <span class="muted">The 2025 CFPB rule removing medical debt from credit reports was vacated in July 2025.</span></p>
 </section>
 
 <section>
@@ -53,7 +54,7 @@
 
 <section>
   <h2>How the agents work</h2>
-  <svg viewBox="0 0 780 200" width="100%" font-family="Segoe UI, sans-serif" font-size="13">
+  <svg viewBox="0 0 780 200" width="100%" font-family="Segoe UI, sans-serif" font-size="11.5">
     <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2d6a3a"/></marker></defs>
     <g text-anchor="middle">
     <rect x="5" y="30" width="135" height="70" rx="10" fill="#e9f5e7" stroke="#2d6a3a"/><text x="72" y="60" font-weight="700">Gatekeeper</text><text x="72" y="80" fill="#5d6b62">Haiku · injection screen</text>
