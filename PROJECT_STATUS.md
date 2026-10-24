@@ -24,7 +24,6 @@ Hand this file to any new Claude Code session to pick up where we left off.
 
 ## To do
 1. ~~Real-user test~~ **Done** (Oct 24): loan officer, 1 hr → 2 min, trust 3/5, approved; run 20261024-150218-4905e1.
-   Then fill the 3 remaining TBDs (report section 7 ×2, slide 8) and rebuild with `python scripts/build_docs.py`.
 2. Optional: demo video (2–3 min).
 3. The day you submit: open the live link so the free server is awake; check the key has not expired (keys expire on a date you chose; the first ones expired Nov 20, 2026).
 4. Submit on Canvas: the repo link, report.html, slides.html.
