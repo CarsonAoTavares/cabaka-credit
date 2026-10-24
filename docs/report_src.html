@@ -254,11 +254,28 @@ The final recommendation was charity care, and the Verifier found no canary (pro
   <tr><td>Maria's path to a mortgage</td><td>Bill goes to collections: projected score 538 (needs 620)</td><td>Debt-to-income stays 36.6% (limit 43%); score 664 if the old ER collection is removed</td><td>Same run, <code>project_mortgage_readiness</code></td></tr>
   <tr><td>Lender cost to originate a $112k mortgage</td><td>~$11,600 (loses ~$8,240)</td><td>$3,000 target (+$360)</td><td>Freddie Mac [8]; Cabaka assumption (the top 25% of lenders already reach $6,900)</td></tr>
   <tr><td>Smallest profitable mortgage at 3% revenue</td><td>~$386,700</td><td>~$100,000</td><td><code>estimate_origination_cost</code></td></tr>
-  <tr><td>Time to a complete recommendation package (analysis, 3–4 options, letter, checks)</td><td><span class="tbd">TBD: loan officer interview</span></td><td>46 s average (38–54 s)</td><td>6 measured runs; user interview</td></tr>
+  <tr><td>Time to a complete recommendation package (analysis, 3–4 options, letter, checks)</td><td>About 1 hour per file (loan officer's estimate)</td><td>56 s for the agents; 2 minutes including the officer's review and decision (46 s average over 6 runs)</td><td>Real user test, Oct 24, 2026; run logs</td></tr>
   <tr><td>AI cost per application</td><td>—</td><td>$0.124</td><td>Measured token logs</td></tr>
   <tr><td>Borrower-language support</td><td>English forms</td><td>Letter written in the borrower's preferred language (Spanish for Maria)</td><td>Run log</td></tr>
 </table>
-<p><b>Real user.</b> <span class="tbd">TBD: one loan officer or clinic front-desk person tries the app; quote + their time today vs with the app.</span></p>
+<p><b>Real user test (Oct 24, 2026).</b> A loan officer used the live app on Maria's file (run <code>20261024-150218-4905e1</code>).
+I followed the test script in <code>docs/user_test_kit.md</code>: questions before, a timed session where they drove, and questions after.</p>
+<table>
+  <tr><th>Question</th><th>Loan officer's answer</th></tr>
+  <tr><td>How long does this take you today?</td><td>About 1 hour per file</td></tr>
+  <tr><td>Time with Cabaka (stopwatch: run, read, decide)</td><td><b>2 minutes</b> (the agents themselves took 56 s)</td></tr>
+  <tr><td>Decision</td><td>Approved the recommendation</td></tr>
+  <tr><td>Anything wrong or missing in the numbers or letter?</td><td>No</td></tr>
+  <tr><td>Would you trust it? (1–5)</td><td><b>3 / 5</b></td></tr>
+  <tr><td>Would you use this?</td><td>"Yes, I would."</td></tr>
+</table>
+<p><b>What the test showed.</b> About <b>1 hour → 2 minutes</b> for a complete recommendation package, roughly a 30× speed-up on this
+file. The trust rating of 3/5 is honest and useful: the officer would use the tool but still wants to check its work, which is exactly
+the human-in-the-loop design. The run itself shows why. The Offer Architect bundled "charity care + a 0% plan for any remainder" into
+one option listed at $0/month over 18 months. The Verifier recomputed the payment as $377.78, flagged the mismatch, one automatic repair
+did not fix it, and the run was marked <b>needs human review</b>. The officer reviewed it and approved. So the safety net caught a real AI
+mistake in front of a real user. <b>Caveat:</b> this is one user and one file, so the time saving is an indication, not a measurement
+across a loan pipeline.</p>
 
 <!-- 8. Limits -->
 <h2>8. Limits and next steps</h2>
